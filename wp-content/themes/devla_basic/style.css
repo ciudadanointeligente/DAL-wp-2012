@@ -1,0 +1,11 @@
+/*
+Theme Name:     devla_basic
+Description:    Basic functional theme for the "Developing Latin America" regional hackathon site. Child theme for the Twenty Eleven theme 
+Author:         Montserrat Lobos (for Ciudadano Inteligente)
+Author URI:		http://ciudadanointeligente.org
+Template:       twentyeleven
+Version:        0.1.0
+*/
+@import url("../twentyeleven/style.css");
+
+body{color: yellow!important;}

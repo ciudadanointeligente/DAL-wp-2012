@@ -1,0 +1,10 @@
+/*
+Theme Name:     devla2012subtheme
+Description:    Child theme for the devla2012
+Author:         Montserrat Lobos for Ciudadano Inteligente (ciudadanointeligente.org)
+Template:       devla2012theme
+Version:        0.1.0
+*/
+@import url("../devla2012theme/style.css");
+
+h2{color: red!important;}

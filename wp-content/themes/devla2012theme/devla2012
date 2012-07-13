@@ -1,9 +1,0 @@
-/*
-Theme Name:     devla2012
-Description:    Child theme for the Twenty Eleven theme 
-Author:         Montserrat Lobos for Ciudadano Inteligente (ciudadanointeligente.org)
-Template:       twentyeleven
-Version:        0.1.0
-*/
-
-body{color: yellow;}

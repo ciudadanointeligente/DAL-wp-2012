@@ -45,3 +45,33 @@ function childtheme_menu_args($args) {
 }
 add_filter('wp_page_menu_args','childtheme_menu_args');
 
+
+//Add custom taxonomies
+function taxonomias_propias() {
+register_taxonomy(
+	 'paises',
+	 'page',
+	 array(
+	 'hierarchical' => true, 
+	 'label' => __( 'Pais' ),
+	 'query_var' => true,
+	 'rewrite' => array( 'slug' => 'pais' ),
+	 'capabilities' => array('assign_terms'=>'edit_guides', 'edit_terms'=>'publish_guides')
+	 )
+
+	);
+}
+
+add_action('init', 'taxonomias_propias', 0);
+
+add_action( 'admin_menu', 'my_page_taxonomy_meta_boxes' );
+
+function my_page_taxonomy_meta_boxes() {
+	foreach ( get_object_taxonomies( 'page' ) as $tax_name ) {
+		if ( !is_taxonomy_hierarchical( $tax_name ) ) {
+			$tax = get_taxonomy( $tax_name );
+			add_meta_box( "tagsdiv-{$tax_name}", $tax->label, 'post_tags_meta_box', 'page', 'side', 'core' );
+		}
+	}
+}
+

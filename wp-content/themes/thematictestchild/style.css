@@ -1,9 +1,8 @@
 /*   
-Theme Name: A Thematic Child Theme
-Theme URI: http://thematictheme.com/
-Description: Use this theme to start your Thematic Child Theme development.
-Author: Ian Stewart
-Author URI: http://themeshaper.com/
+Theme Name: A Thematic Test Child Theme by montse
+Description: I'm using this theme to start my own Thematic Child Theme development.
+Author: Montserrat Lobos para Ciudadano Inteligente
+Author URI: http://ciudadanointeligente.org/
 Template: thematic
 Version: 1.0
 Tags: white, three-columns, two-columns, fixed-width, theme-options, left-sidebar, right-sidebar, threaded-comments, sticky-post, microformats
@@ -36,4 +35,5 @@ This work, like WordPress, is released under GNU General Public License, version
 /* Prepare theme for plugins */
 @import url('../thematic/library/styles/plugins.css');
 
+body{color: blue;}
 

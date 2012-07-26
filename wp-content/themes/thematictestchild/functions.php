@@ -3,7 +3,7 @@
  * Custom Child Pais Functions
  *
  *Editado por @montselobos 
- *This file's parent directory can be moved to the wp-content/paiss directory 
+ *This file's parent directory can be moved to the wp-content/paises directory 
  * to allow this Child pais to be activated in the Appearance - Paiss section of the WP-Admin.
  *
  * Included are a set of constants that can be defined to customize aspects of Thematic's 
@@ -75,7 +75,7 @@ function my_page_taxonomy_meta_boxes() {
 	}
 }*/
 
-//test dragons con dropdown
+//test paises con dropdown
 
 add_action( 'init', 'create_pais_taxonomy', 0 );
  
@@ -90,8 +90,10 @@ function create_pais_taxonomy() {
 }
 
 function add_pais_box() {
+
+	remove_meta_box('paisdiv','page','side');
+
 	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function', 'page', 'side', 'core');
-	remove_meta_box('pais','page','core');  
 }	
  
 function add_pais_menus() {
@@ -112,18 +114,18 @@ function your_styling_function($page) {
  
  
 	// Get all pais taxonomy terms
-	$paiss = get_terms('pais', 'hide_empty=0'); 
+	$paises = get_terms('pais', 'hide_empty=0'); 
  
 ?>
 <select name='page_pais' id='page_pais'>
-	<!-- Display paiss as options -->
+	<!-- Display paises as options -->
     <?php 
         $names = wp_get_object_terms($page->ID, 'pais'); 
         ?>
         <option class='pais-option' value='' 
         <?php if (!count($names)) echo "selected";?>>None</option>
         <?php
-	foreach ($paiss as $pais) {
+	foreach ($paises as $pais) {
 		if (!is_wp_error($names) && !empty($names) && !strcmp($pais->slug, $names[0]->slug)) 
 			echo "<option class='pais-option' value='" . $pais->slug . "' selected>" . $pais->name . "</option>\n"; 
 		else
@@ -133,5 +135,13 @@ function your_styling_function($page) {
 </select>  
 
 <?php
+
 }
+
+
+
+
+
+
+
 

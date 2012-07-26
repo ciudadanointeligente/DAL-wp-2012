@@ -73,3 +73,31 @@ function my_page_taxonomy_meta_boxes() {
 		}
 	}
 }
+
+//test dragons con dropdown
+
+add_action( 'init', 'create_theme_taxonomy', 0 );
+ 
+function create_theme_taxonomy() {
+	if (!taxonomy_exists('theme')) {
+		register_taxonomy( 'theme', 'page', array( 'hierarchical' => true, 'label' => __('Theme'), 'query_var' => 'theme', 'rewrite' => array( 'slug' => 'theme' ) ) );
+ 
+		wp_insert_term('Beauty', 'theme');
+		wp_insert_term('Dragons', 'theme');
+		wp_insert_term('Halloween', 'theme');
+	}
+}
+
+function add_theme_box() {
+	add_meta_box('theme_box_ID', __('Theme'), 'your_styling_function', 'post', 'side', 'core');
+}	
+ 
+function add_theme_menus() {
+ 
+	if ( ! is_admin() )
+		return;
+ 
+	add_action('admin_menu', 'add_theme_box');
+}
+ 
+add_theme_menus();

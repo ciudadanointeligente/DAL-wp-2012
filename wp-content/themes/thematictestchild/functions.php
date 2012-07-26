@@ -34,7 +34,7 @@
 
 // Adds a home link to your menu
 // http://codex.wordpress.org/Template_Tags/wp_page_menu
-function childpais_menu_args($args) {
+function childtheme_menu_args($args) {
     $args = array(
         'show_home' => 'Home',
         'sort_column' => 'menu_order',
@@ -43,37 +43,8 @@ function childpais_menu_args($args) {
    );
 	return $args;
 }
-add_filter('wp_page_menu_args','childpais_menu_args');
+add_filter('wp_page_menu_args','childtheme_menu_args');
 
-//Add custom taxonomies
-/*
-function taxonomias_propias() {
-register_taxonomy(
-	 'paises',
-	 'page',
-	 array(
-	 'hierarchical' => true, 
-	 'label' => __( 'Pais' ),
-	 'query_var' => true,
-	 'rewrite' => array( 'slug' => 'pais' ),
-	 'capabilities' => array('assign_terms'=>'edit_guides', 'edit_terms'=>'publish_guides')
-	 )
-
-	);
-}
-
-add_action('init', 'taxonomias_propias', 0);
-
-add_action( 'admin_menu', 'my_page_taxonomy_meta_boxes' );
-
-function my_page_taxonomy_meta_boxes() {
-	foreach ( get_object_taxonomies( 'page' ) as $tax_name ) {
-		if ( !is_taxonomy_hierarchical( $tax_name ) ) {
-			$tax = get_taxonomy( $tax_name );
-			add_meta_box( "tagsdiv-{$tax_name}", $tax->label, 'page_tags_meta_box', 'page', 'side', 'core' );
-		}
-	}
-}*/
 
 //test paises con dropdown
 
@@ -94,17 +65,73 @@ function add_pais_box() {
 	remove_meta_box('paisdiv','page','side');
 
 	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function', 'page', 'side', 'core');
+
 }	
  
+
+//
+//
+//
+//
+//define funcion para guardar tax
+
+function save_taxonomy_data($thispage_id) {
+// verify this came from our screen and with proper authorization.
+$myFile = "testFile.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
+$stringData = "Bobby Bopper\n";
+fwrite($fh, $stringData);
+fclose($fh);
+/* 	if ( !wp_verify_nonce( $_POST['taxonomy_noncename'], 'taxonomy_pais' )) {
+    	return $thispage_id;
+  	}
+ 
+  	// verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
+  	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+    	return $thispage_id;
+ 
+ 
+  	// Check permissions
+  	if ( 'page' == $_POST['post_type'] ) {
+    	if ( !current_user_can( 'edit_page', $thispage_id ) )
+      		return $thispage_id;
+  	} else {
+    	if ( !current_user_can( 'edit_post', $thispage_id ) )
+      	return $thispage_id;
+  	}*/
+ 
+  	// OK, we're authenticated: we need to find and save the data
+	$post = get_post($thispage_id);
+	//if (($post->post_type == 'post') || ($post->post_type == 'page')) { 
+           // OR $post->post_type != 'revision'
+           $pais = $_POST['page_pais'];
+
+	   //wp_set_object_terms( $thispage_id, $pais, 'pais' );
+       wp_set_object_terms( $thispage_id, $pais, 'pais' );
+        //}
+
+	return $pais;
+ 
+}
+
+
+// añade menu de paises
+
 function add_pais_menus() {
  
-	if ( ! is_admin() )
-		return;
+	// if ( ! is_admin() )
+	// 	return;
  
 	add_action('admin_menu', 'add_pais_box');
+	add_action('save_page', 'save_taxonomy_data');
+	//print_r($_POST);
+	//echo $_POST['page_pais'];
+
 }
  
 add_pais_menus();
+
+
 
 // This function gets called in edit-form-advanced.php
 function your_styling_function($page) {
@@ -123,7 +150,7 @@ function your_styling_function($page) {
         $names = wp_get_object_terms($page->ID, 'pais'); 
         ?>
         <option class='pais-option' value='' 
-        <?php if (!count($names)) echo "selected";?>>None</option>
+        <?php if (!count($names)) echo "selected";?>>Ninguno</option>
         <?php
 	foreach ($paises as $pais) {
 		if (!is_wp_error($names) && !empty($names) && !strcmp($pais->slug, $names[0]->slug)) 
@@ -137,7 +164,6 @@ function your_styling_function($page) {
 <?php
 
 }
-
 
 
 

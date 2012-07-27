@@ -46,110 +46,7 @@ function childtheme_menu_args($args) {
 add_filter('wp_page_menu_args','childtheme_menu_args');
 
 
-/*//test themes con dropdown on posts
-
-add_action( 'init', 'create_theme_taxonomy', 0 );
- 
-function create_theme_taxonomy() {
-	if (!taxonomy_exists('theme')) {
-		register_taxonomy( 'theme', 'post', array( 'hierarchical' => false, 'label' => __('Theme'), 'query_var' => 'theme', 'rewrite' => array( 'slug' => 'theme' ) ) );
- 
-		wp_insert_term('Beauty', 'theme');
-		wp_insert_term('Dragons', 'theme');
-		wp_insert_term('Halloween', 'theme');
-	}
-}
- 
-
- function add_theme_box() {
- 	remove_meta_box('tagsdiv-theme','post','core');
-	add_meta_box('theme_box_ID', __('Theme'), 'your_styling_function', 'post', 'side', 'core');
-}	
- 
-function add_theme_menus() {
- 
-	if ( ! is_admin() )
-		return;
- 
-	add_action('admin_menu', 'add_theme_box');
-*/
-	/* Use the save_post action to save new post data 
-	add_action('save_post', 'save_taxonomy_data');
-}
- 
-add_theme_menus();
-
-
-// This function gets called in edit-form-advanced.php
-function your_styling_function($post) {
- 
-	echo '<input type="hidden" name="taxonomy_noncename" id="taxonomy_noncename" value="' . 
-    		wp_create_nonce( 'taxonomy_theme' ) . '" />';
- 
- 
-	// Get all theme taxonomy terms
-	$themes = get_terms('theme', 'hide_empty=0'); 
- 
-?>
-<select name='post_theme' id='post_theme'>
-	<!-- Display themes as options -->
-    <?php 
-        $names = wp_get_object_terms($post->ID, 'theme'); 
-        ?>
-        <option class='theme-option' value='' 
-        <?php if (!count($names)) echo "selected";?>>None</option>
-        <?php
-	foreach ($themes as $theme) {
-		if (!is_wp_error($names) && !empty($names) && !strcmp($theme->slug, $names[0]->slug)) 
-			echo "<option class='theme-option' value='" . $theme->slug . "' selected>" . $theme->name . "</option>\n"; 
-
-		else
-			echo "<option class='theme-option' value='" . $theme->slug . "'>" . $theme->name . "</option>\n"; 
-	}
-
-   ?>
-</select>    
-<?php
-}
-
-function save_taxonomy_data($post_id) {
-// verify this came from our screen and with proper authorization.
- 
- 	if ( !wp_verify_nonce( $_POST['taxonomy_noncename'], 'taxonomy_theme' )) {
-    	return $post_id;
-  	}
- 
-  	// verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
-  	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
-    	return $post_id;
- 
- 
-  	// Check permissions
-  	if ( 'page' == $_POST['post_type'] ) {
-    	if ( !current_user_can( 'edit_page', $post_id ) )
-      		return $post_id;
-  	} else {
-    	if ( !current_user_can( 'edit_post', $post_id ) )
-      	return $post_id;
-  	}
- 
-  	// OK, we're authenticated: we need to find and save the data
-	$post = get_post($post_id);
-	if (($post->post_type == 'post') || ($post->post_type == 'page')) { 
-           // OR $post->post_type != 'revision'
-           $theme = $_POST['post_theme'];
-	   wp_set_object_terms( $post_id, $theme, 'theme' );
-        }
-	return $theme;
- 
-}*/
-
-///////////////
-
-
-
-//test paises con dropdown on pages
-
+//Agrega taxonomía "paises" con dropdown para pages.
 
 add_action( 'init', 'create_pais_taxonomy', 0 );
  
@@ -157,9 +54,26 @@ function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
 		register_taxonomy( 'pais', 'page', array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
-		wp_insert_term('Beauty', 'pais');
-		wp_insert_term('Dragons', 'pais');
-		wp_insert_term('Halloween', 'pais');
+		  wp_insert_term('Argentina', 'pais');
+      wp_insert_term('Bolivia', 'pais');
+      wp_insert_term('Brasil', 'pais');
+      wp_insert_term('Chile', 'pais');
+      wp_insert_term('Colombia', 'pais');
+      wp_insert_term('Costa Rica', 'pais');
+      wp_insert_term('Cuba', 'pais');
+      wp_insert_term('Ecuador', 'pais');
+      wp_insert_term('El Salvador', 'pais');
+      wp_insert_term('Guatemala', 'pais');
+      wp_insert_term('Haití', 'pais');
+      wp_insert_term('Honduras', 'pais');
+      wp_insert_term('México', 'pais');
+      wp_insert_term('Nicaragua', 'pais');
+      wp_insert_term('Panamá', 'pais');
+      wp_insert_term('Paraguay', 'pais');
+      wp_insert_term('Perú', 'pais');
+      wp_insert_term('República Dominicana', 'pais');
+      wp_insert_term('Uruguay', 'pais');
+      wp_insert_term('Venezuela', 'pais');
 	}
 }
  
@@ -200,7 +114,7 @@ function your_styling_function($post) {
         $names = wp_get_object_terms($post->ID, 'pais'); 
         ?>
         <option class='pais-option' value='' 
-        <?php if (!count($names)) echo "selected";?>>None</option>
+        <?php if (!count($names)) echo "selected";?>>Ninguno</option>
         <?php
 	foreach ($paises as $pais) {
 		if (!is_wp_error($names) && !empty($names) && !strcmp($pais->slug, $names[0]->slug)) 

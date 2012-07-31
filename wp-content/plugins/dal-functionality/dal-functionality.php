@@ -9,7 +9,10 @@ Author URI: http://ciudadanointeligente.org
 */
 
 
-//Agrega taxonomía "paises" con dropdown para pages.
+//
+// 1- Agrega taxonomía "paises" con dropdown para pages.
+//
+
 
 add_action( 'init', 'create_pais_taxonomy', 0 );
  
@@ -123,5 +126,25 @@ function save_taxonomy_data($post_id) {
 	return $pais;
  
 }
+
+
+//
+// 2- register sidebar
+//
+if ( function_exists ('register_sidebar')) { 
+   register_sidebar(array(
+  'name' => __( 'Country page sidebar' ),
+  'id' => 'right-sidebar',
+  'description' => __( 'Widgets in this area will be shown on the country pages.' ),
+  'before_title' => '<h3>',
+  'after_title' => '</h3>'
+  ));
+}
+// Puts content above the asides
+function my_above_asides() { ?>
+put the code to display your content here
+<?php }
+
+add_action('thematic_abovemainasides', 'my_above_asides');
 
 ?>

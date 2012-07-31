@@ -74,12 +74,31 @@ Template Name: country_page
 			
 		</div><!-- #container -->
 
+		<!-- aside con sibling menu --> 
+		<aside>
+			aside menu
+			<?php
+
+			if($post->post_parent) { // page is a child
+
+			wp_list_pages('sort_column=menu_order&title_li= &child_of='.$post->post_parent);
+
+			}
+
+			elseif(wp_list_pages("child_of=".$post->ID."&echo=0")) { // page has children
+
+			wp_list_pages('sort_column=menu_order&title_li= &child_of='.$post->ID);
+			}
+			?>
+
+		</aside>
+
 <?php 
     // action hook for placing content below #container
     thematic_belowcontainer();
 
     // calling the standard sidebar 
-    thematic_sidebar();
+    //thematic_sidebar();
     
     // calling footer.php
     get_footer();

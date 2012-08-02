@@ -91,7 +91,34 @@ Template Name: country_page
 			}
 			?>
 
+			-----
+			-----
+
+			<?php
+
+			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+
+			if ($term->parent == 0) { 
+
+			wp_list_categories('taxonomy=pais&depth=1&show_count=0
+
+			&title_li=&child_of=' . $term->term_id);
+
+			} else {
+
+			wp_list_categories('taxonomy=pais&show_count=0
+
+			&title_li=&child_of=' . $term->parent); 
+
+			}
+
+			?>
+
+
 		</aside>
+
+
+
 
 <?php 
     // action hook for placing content below #container

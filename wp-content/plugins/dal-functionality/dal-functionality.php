@@ -18,7 +18,7 @@ add_action( 'init', 'create_pais_taxonomy', 0 );
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
-		register_taxonomy( 'pais', 'page', array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
+		register_taxonomy( 'pais', array( 'page','dal_country_sponsor' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
 		  wp_insert_term('Argentina', 'pais');
       wp_insert_term('Bolivia', 'pais');
@@ -42,11 +42,15 @@ function create_pais_taxonomy() {
       wp_insert_term('Venezuela', 'pais');
 	}
 }
+
+
  
 
  function add_pais_box() {
- 	remove_meta_box('tagsdiv-pais','page','core');
-	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function', 'page', 'side', 'core');
+ 	remove_meta_box('tagsdiv-pais', 'page','core');
+  remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
+	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','page', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_country_sponsor', 'side', 'core');
 }	
  
 function add_pais_menus() {
@@ -118,7 +122,7 @@ function save_taxonomy_data($post_id) {
  
   	// OK, we're authenticated: we need to find and save the data
 	$post = get_post($post_id);
-	if (($post->post_type == 'post') || ($post->post_type == 'page')) { 
+	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post')) { 
            // OR $post->post_type != 'revision'
            $pais = $_POST['post_pais'];
 	   wp_set_object_terms( $post_id, $pais, 'pais' );
@@ -169,5 +173,7 @@ function create_post_type() {
     )
   );
 }
+
+
 
 ?>

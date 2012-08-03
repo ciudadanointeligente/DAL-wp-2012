@@ -183,6 +183,7 @@ function create_post_type() {
       ),
     'public' => true,
     'has_archive' => false,
+    'supports' => array( 'title', 'thumbnail', 'excerpt' )
     )
   );
 }

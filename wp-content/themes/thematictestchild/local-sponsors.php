@@ -3,7 +3,9 @@
 
 
 	 <ul class="displayEquipo"> 
-        <?php  query_posts( array( 'post_type' => 'dal_country_sponsor', 'pais'=>'chile', 'paged' => get_query_var('page'), 'posts_per_page' => 30, 'orderby' => 'title', 'order' => 'DESC' ) ); ?>
+        <?php  
+        $term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
+        query_posts( array( 'post_type' => 'dal_country_sponsor', 'pais'=>$term->name, 'paged' => get_query_var('taxonomy'), 'posts_per_page' => 30, 'orderby' => 'title', 'order' => 'DESC' ) ); ?>
        
 			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 
@@ -17,11 +19,10 @@
                       
              <?php endwhile; else: ?>
             <?php endif; ?>
-    
+			
    	 	<?php wp_reset_query();  ?>
      </ul>   
-
-
+	
 
 </div>
 

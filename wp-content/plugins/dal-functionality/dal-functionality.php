@@ -160,13 +160,26 @@ add_action('thematic_abovemainasides', 'my_above_asides');
 //========3-Let's create our "sponsors" CPT
 //
 
+
+
 add_action( 'init', 'create_post_type' );
 function create_post_type() {
   register_post_type( 'dal_country_sponsor',
     array(
       'labels' => array(
         'name' => __( 'Sponsors' ),
-        'singular_name' => __( 'Sponsor' )
+        'singular_name' => __( 'Sponsor' ),
+        'add_new' => _x('Add New', 'Sponsor'),
+        'add_new_item' => __('Add New Sponsor'),
+        'edit_item' => __('Edit Sponsor'),
+        'new_item' => __('New Sponsor'),
+        'all_items' => __('All Sponsors'),
+        'view_item' => __('View Sponsor'),
+        'search_items' => __('Search Sponsors'),
+        'not_found' =>  __('No Sponsors found'),
+        'not_found_in_trash' => __('No Sponsors found in Trash'), 
+        'parent_item_colon' => '',
+        'menu_name' => __('Sponsors')
       ),
     'public' => true,
     'has_archive' => false,

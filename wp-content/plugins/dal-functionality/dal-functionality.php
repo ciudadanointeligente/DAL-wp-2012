@@ -129,7 +129,7 @@ function save_taxonomy_data($post_id) {
 
 
 //
-// 2- register sidebar
+//======== 2- Let's register aur cuntry page custom sidebar
 //
 if ( function_exists ('register_sidebar')) { 
    register_sidebar(array(
@@ -139,12 +139,35 @@ if ( function_exists ('register_sidebar')) {
   'before_title' => '<h3>',
   'after_title' => '</h3>'
   ));
+
 }
-// Puts content above the asides
+/* Puts content above the asides
 function my_above_asides() { ?>
 put the code to display your content here
 <?php }
 
 add_action('thematic_abovemainasides', 'my_above_asides');
+*/
+
+
+
+
+//
+//========3-Let's create our "sponsors" CPT
+//
+
+add_action( 'init', 'create_post_type' );
+function create_post_type() {
+  register_post_type( 'dal_country_sponsor',
+    array(
+      'labels' => array(
+        'name' => __( 'Sponsors' ),
+        'singular_name' => __( 'Sponsor' )
+      ),
+    'public' => true,
+    'has_archive' => false,
+    )
+  );
+}
 
 ?>

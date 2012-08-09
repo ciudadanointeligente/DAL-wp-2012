@@ -26,8 +26,8 @@
 				echo apply_filters( 'thematic_open_id_content', '<div id="content">' . "\n\n" );
 							
 	            // start the loop
-	            while ( have_posts() ) : the_post();
-    	        
+	            while ( have_posts() ) : the_post(); 
+
     	        // create the navigation above the content
 				thematic_navigation_above();
 		
@@ -35,8 +35,45 @@
     	        get_sidebar('single-top');
 		
     	        // action hook creating the single post
-    	        thematic_singlepost();
-				
+    	        //
+    	        //
+    	        thematic_abovepost();
+				?>
+			
+				<?php
+					echo '<div id="post-' . get_the_ID() . '" ';
+					// Checking for defined constant to enable Thematic's post classes
+					if ( ! ( THEMATIC_COMPATIBLE_POST_CLASS ) ) {
+					    post_class();
+					    echo '>';
+					} else {
+					    echo 'class="';
+					    thematic_post_class();
+					    echo '">';
+					}
+
+	            	// creating the post header
+	            	thematic_postheader();
+	            ?>
+     				
+					<div class="entry-content">
+						<?php the_post_thumbnail( $size, $attr ); ?> 
+						<?php thematic_content(); ?>
+
+						<?php wp_link_pages('before=<div class="page-link">' . __('Pages:', 'thematic') . '&after=</div>') ?>
+						
+					</div><!-- .entry-content -->
+					
+					<?php// thematic_postfooter(); ?>
+					
+				</div><!-- #post -->
+		<?php
+			// action hook for insterting content below #post
+			thematic_belowpost();
+    	        ?>
+				<h1>eeeeee</h1>		
+    	        <?php
+			
     	        // calling the widget area 'single-insert'
     	        get_sidebar('single-insert');
 		

@@ -128,7 +128,7 @@ Template Name: country_page
     thematic_belowcontainer();
 
     // calling the standard sidebar 
-    thematic_sidebar();
+    //thematic_sidebar();
     
     // calling footer.php
     get_footer();

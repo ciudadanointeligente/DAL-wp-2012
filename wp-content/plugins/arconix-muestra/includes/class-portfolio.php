@@ -1,12 +1,12 @@
 <?php
 /**
- * This file contains the Dal_apps_Portfolio class.
+ * This file contains the Arconix_Portfolio class.
  *
  * This class handles the creation of the "Portfolio" post type, and creates a
  * UI to display the Portfolio-specific data on the admin screens.
  */
 
-class Dal_apps_Portfolio {
+class Arconix_Portfolio {
 
     /**
      * Construct Method
@@ -39,7 +39,7 @@ class Dal_apps_Portfolio {
 	add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widget' ) );
 
         /** Add Shortcode */
-	add_shortcode( 'dal_portfolio', array( $this, 'dal_portfolio_shortcode' ) );
+	add_shortcode( 'portfolio', array( $this, 'portfolio_shortcode' ) );
         add_filter( 'widget_text', 'do_shortcode' );
 
     }
@@ -58,34 +58,33 @@ class Dal_apps_Portfolio {
      */
     function create_post_type() {
 
-	$args = apply_filters( 'dal_apps_portfolio_post_type_args',
+	$args = apply_filters( 'arconix_portfolio_post_type_args',
 	    array(
 		'labels' => array(
-		    'name' => __( 'App', 'acp' ),
-		    'singular_name' => __( 'App', 'acp' ),
+		    'name' => __( 'Portfolio', 'acp' ),
+		    'singular_name' => __( 'Portfolio', 'acp' ),
 		    'add_new' => __( 'Add New', 'acp' ),
-		    'add_new_item' => __( 'Add New App', 'acp' ),
+		    'add_new_item' => __( 'Add New Portfolio Item', 'acp' ),
 		    'edit' => __( 'Edit', 'acp' ),
-		    'edit_item' => __( 'Edit App', 'acp' ),
-		    'new_item' => __( 'New App', 'acp' ),
-		    'view' => __( 'View App', 'acp' ),
-		    'view_item' => __( 'View App', 'acp' ),
-		    'search_items' => __( 'Search apps', 'acp' ),
-		    'not_found' => __( 'No apps found', 'acp' ),
-		    'not_found_in_trash' => __( 'No apps found in Trash', 'acp' )
+		    'edit_item' => __( 'Edit Portfolio Item', 'acp' ),
+		    'new_item' => __( 'New Item', 'acp' ),
+		    'view' => __( 'View Portfolio', 'acp' ),
+		    'view_item' => __( 'View Portfolio Item', 'acp' ),
+		    'search_items' => __( 'Search Portfolio', 'acp' ),
+		    'not_found' => __( 'No portfolio items found', 'acp' ),
+		    'not_found_in_trash' => __( 'No portfolio items found in Trash', 'acp' )
 		),
 		'public' => true,
 		'query_var' => true,
 		'menu_position' => 20,
 		'menu_icon' => ACP_URL . 'images/portfolio-icon-16x16.png',
 		'has_archive' => false,
-		'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'tags'  ),
-		'rewrite' => array( 'slug' => 'dal_portfolio', 'with_front' => false ),
-        'taxonomies' => array('post_tag')
+		'supports' => array( 'title', 'editor', 'thumbnail' ),
+		'rewrite' => array( 'slug' => 'portfolio', 'with_front' => false )
 	    )
 	);
 
-	register_post_type( 'dal_portfolio' , $args);
+	register_post_type( 'portfolio' , $args);
     }
 
     /**
@@ -95,7 +94,7 @@ class Dal_apps_Portfolio {
      */
     function create_taxonomy() {
 
-	$args = apply_filters( 'dal_apps_portfolio_taxonomy_args',
+	$args = apply_filters( 'arconix_portfolio_taxonomy_args',
 	    array(
 		'labels' => array(
 		    'name' => __( 'Features', 'acp' ),
@@ -123,7 +122,7 @@ class Dal_apps_Portfolio {
 	);
 
 
-	register_taxonomy( 'feature', 'dal_portfolio', $args );
+	register_taxonomy( 'feature', 'portfolio', $args );
 
     }
 
@@ -232,7 +231,7 @@ class Dal_apps_Portfolio {
      * @since 0.9
      * @version 1.1
      */
-    function dal_portfolio_shortcode( $atts, $content = null ) {
+    function portfolio_shortcode( $atts, $content = null ) {
 	/*
 	Supported Attributes
 	    link =>  page, image
@@ -260,18 +259,18 @@ class Dal_apps_Portfolio {
 	self::$load_js = true;
 
 	/** Shortcode defaults */
-	$defaults = apply_filters( 'dal_apps_portfolio_shortcode_args',
+	$defaults = apply_filters( 'arconix_portfolio_shortcode_args',
 	    array(
 		'link' => 'image',
 		'thumb' => 'portfolio-thumb',
 		'full' => 'portfolio-large',
-        'title' => 'above',
+                'title' => 'above',
 		'display' => '',
-        'heading' => 'Display',
+                'heading' => 'Display',
 		'orderby' => 'date',
 		'order' => 'desc',
-        'terms' => '',
-        'operator' => 'IN'
+                'terms' => '',
+                'operator' => 'IN'
 	    )
 	);
 
@@ -280,9 +279,9 @@ class Dal_apps_Portfolio {
         if( $title == "yes" ) $title == "above"; // For backwards compatibility
 
 	/** Default Query arguments -- can be overridden by filter */
-	$args = apply_filters( 'dal_apps_portfolio_shortcode_query_args',
+	$args = apply_filters( 'arconix_portfolio_shortcode_query_args',
 	    array(
-		'post_type' => 'dal_portfolio',
+		'post_type' => 'portfolio',
 		'posts_per_page' => -1, // show all
                 'meta_key' => '_thumbnail_id', // Should pull only items with featured images
 		'orderby' => $orderby,
@@ -340,7 +339,7 @@ class Dal_apps_Portfolio {
             
             /** If there are multiple terms in use, then run through our display list */
             if( count( $terms ) > 1 )  {
-                $return .= '<ul class="dal_apps-portfolio-features"><li class="dal_apps-portfolio-category-title">';
+                $return .= '<ul class="arconix-portfolio-features"><li class="arconix-portfolio-category-title">';
                 $return .= $heading;
                 $return .= '</li><li class="active"><a href="javascript:void(0)" class="all">all</a></li>';
 
@@ -356,7 +355,7 @@ class Dal_apps_Portfolio {
                 $return .= $term_list . '</ul>';
             }
 
-            $return .= '<ul class="dal_apps-portfolio-grid">';
+            $return .= '<ul class="arconix-portfolio-grid">';
 
             while( $portfolio_query->have_posts() ) : $portfolio_query->the_post();
 
@@ -371,7 +370,7 @@ class Dal_apps_Portfolio {
                 $return .= '">';
 
                 /** Above image Title output */
-                if( $title == "above" ) $return .= '<div class="dal_apps-portfolio-title">' . get_the_title() . '</div>';
+                if( $title == "above" ) $return .= '<div class="arconix-portfolio-title">' . get_the_title() . '</div>';
 
                 /** Handle the image link */
                 switch( $link ) {
@@ -395,16 +394,16 @@ class Dal_apps_Portfolio {
                 }
 
 		/** Below image Title output */
-                if( $title == "below" ) $return .= '<div class="dal_apps-portfolio-title">' . get_the_title() . '</div>';
+                if( $title == "below" ) $return .= '<div class="arconix-portfolio-title">' . get_the_title() . '</div>';
 
                 /** Display the content */
                 switch( $display ) {
                     case "content" :
-                        $return .= '<div class="dal_apps-portfolio-text">' . get_the_content() . '</div>';
+                        $return .= '<div class="arconix-portfolio-text">' . get_the_content() . '</div>';
                         break;
 
                     case "excerpt" :
-                        $return .= '<div class="dal_apps-portfolio-text">' . get_the_excerpt() . '</div>';
+                        $return .= '<div class="arconix-portfolio-text">' . get_the_excerpt() . '</div>';
                         break;
 
                     default : // If it's anything else, return nothing.
@@ -455,14 +454,14 @@ class Dal_apps_Portfolio {
         wp_register_script( 'jquery-quicksand', ACP_URL . 'includes/js/jquery.quicksand.js', array( 'jquery' ), '1.2.2', true );
         wp_register_script( 'jquery-easing', ACP_URL . 'includes/js/jquery.easing.1.3.js', array( 'jquery' ), '1.3', true );
 
-	if( file_exists( get_stylesheet_directory() . "/dal_apps-portfolio.js" ) ) {
-	    wp_register_script( 'dal_apps-portfolio-js', get_stylesheet_directory_uri() . '/dal_apps-portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
+	if( file_exists( get_stylesheet_directory() . "/arconix-portfolio.js" ) ) {
+	    wp_register_script( 'arconix-portfolio-js', get_stylesheet_directory_uri() . '/arconix-portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
 	}
-	elseif( file_exists( get_template_directory() . "/dal_apps-portfolio.js" ) ) {
-	    wp_register_script( 'dal_apps-portfolio-js', get_template_directory_uri() . '/dal_apps-portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
+	elseif( file_exists( get_template_directory() . "/arconix-portfolio.js" ) ) {
+	    wp_register_script( 'arconix-portfolio-js', get_template_directory_uri() . '/arconix-portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
 	}
 	else {
-            wp_register_script( 'dal_apps-portfolio-js', ACP_URL . 'includes/js/portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
+            wp_register_script( 'arconix-portfolio-js', ACP_URL . 'includes/js/portfolio.js', array( 'jquery-quicksand', 'jquery-easing' ), ACP_VERSION, true );
 	}
     }
 
@@ -477,7 +476,7 @@ class Dal_apps_Portfolio {
 	if( ! self::$load_js )
 	    return;
 
-	wp_print_scripts( 'dal_apps-portfolio-js' );
+	wp_print_scripts( 'arconix-portfolio-js' );
     }
 
 
@@ -490,18 +489,63 @@ class Dal_apps_Portfolio {
      */
     function enqueue_css() {
 
-	if( file_exists( get_stylesheet_directory() . "/dal_apps-portfolio.css" ) ) {
-	    wp_enqueue_style( 'dal_apps-portfolio', get_stylesheet_directory_uri() . '/dal_apps-portfolio.css', array(), ACP_VERSION );
+	if( file_exists( get_stylesheet_directory() . "/arconix-portfolio.css" ) ) {
+	    wp_enqueue_style( 'arconix-portfolio', get_stylesheet_directory_uri() . '/arconix-portfolio.css', array(), ACP_VERSION );
 	}
-	elseif( file_exists( get_template_directory() . "/dal_apps-portfolio.css" ) ) {
-	    wp_enqueue_style( 'dal_apps-portfolio', get_template_directory_uri() . '/dal_apps-portfolio.css', array(), ACP_VERSION );
+	elseif( file_exists( get_template_directory() . "/arconix-portfolio.css" ) ) {
+	    wp_enqueue_style( 'arconix-portfolio', get_template_directory_uri() . '/arconix-portfolio.css', array(), ACP_VERSION );
 	}
 	else {
-	    wp_enqueue_style( 'dal_apps-portfolio', plugins_url( '/portfolio.css', __FILE__), array(), ACP_VERSION );
+	    wp_enqueue_style( 'arconix-portfolio', plugins_url( '/portfolio.css', __FILE__), array(), ACP_VERSION );
 	}
     }
 
 
+    /**
+     * Adds a widget to the dashboard.
+     *
+     * @since 0.9.1
+     */
+    function register_dashboard_widget() {
+        wp_add_dashboard_widget( 'ac-portfolio', 'Arconix Portfolio', array( $this, 'dashboard_widget_output' ) );
+    }
+
+
+    /**
+     * Output for the dashboard widget
+     *
+     * @since 0.9.1
+     * @version 1.0
+     */
+    function dashboard_widget_output() {
+
+        echo '<div class="rss-widget">';
+
+        wp_widget_rss_output( array(
+            'url' => 'http://arconixpc.com/tag/arconix-portfolio/feed', // feed url
+            'title' => 'Arconix Portfolio Posts', // feed title
+            'items' => 3, //how many posts to show
+            'show_summary' => 1, // display excerpt
+            'show_author' => 0, // display author
+            'show_date' => 1 // display post date
+        ) );
+
+        echo '<div class="acp-widget-bottom"><ul>'; ?>
+            <li><a href="http://arcnx.co/apwiki"><img src="<?php echo ACP_URL . 'images/page-16x16.png'?>">Wiki Page</a></li>
+            <li><a href="http://arcnx.co/aphelp"><img src="<?php echo ACP_URL . 'images/help-16x16.png'?>">Support Forum</a></li>
+            <li><a href="http://arcnx.co/aptrello"><img src="<?php echo ACP_URL . 'images/trello-16x16.png'?>">Dev Board</a></li>
+        <?php echo '</ul></div>';
+        echo "</div>";
+
+        // handle the styling
+        echo '<style type="text/css">
+            #ac-portfolio .rsssummary { display: block; }
+            #ac-portfolio .acp-widget-bottom { border-top: 1px solid #ddd; padding-top: 10px; text-align: center; }
+            #ac-portfolio .acp-widget-bottom ul { list-style: none; }
+            #ac-portfolio .acp-widget-bottom ul li { display: inline; padding-right: 9%; }
+            #ac-portfolio .acp-widget-bottom img { padding-right: 3px; vertical-align: top; }
+        </style>';
+    }
 
 }
 ?>

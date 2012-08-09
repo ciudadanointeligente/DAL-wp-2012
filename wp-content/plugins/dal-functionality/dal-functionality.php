@@ -18,7 +18,7 @@ add_action( 'init', 'create_pais_taxonomy', 0 );
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
-		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
+		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'dal_portfolio', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
 		  wp_insert_term('Argentina', 'pais');
       wp_insert_term('Bolivia', 'pais');
@@ -48,11 +48,13 @@ function create_pais_taxonomy() {
 
  function add_pais_box() {
  	remove_meta_box('tagsdiv-pais', 'page','core');
-    remove_meta_box('tagsdiv-pais', 'post','core');
+  remove_meta_box('tagsdiv-pais', 'post','core');
   remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
+  remove_meta_box('tagsdiv-pais', 'dal_portfolio','core');
 	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','page', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','post', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_country_sponsor', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_portfolio', 'side', 'core');
 }	
  
 function add_pais_menus() {
@@ -212,6 +214,65 @@ function create_dal_post_type() {
   );
 }
 
+//
+//=======4-activa galería de apps
+//
+//Portfolio Gallery provides an easy way to display your portfolio on your website
+//
+
+
+
+register_activation_hook( __FILE__, 'dal_apps_portfolio_activation' );
+/**
+ * This function runs on plugin activation. It checks for the existence of the CPT
+ * and creates it otherwise
+ *
+ * @since 0.9
+ */
+function dal_apps_portfolio_activation() {
+
+    if( ! post_type_exists( 'dal_portfolio' ) ) {
+  dal_apps_portfolio_init();
+  global $_dal_apps_portfolio;
+  $_dal_apps_portfolio->create_post_type();
+  $_dal_apps_portfolio->create_taxonomy();
+    }
+    flush_rewrite_rules();
+}
+
+register_deactivation_hook( __FILE__, 'dal_apps_portfolio_deactivation' );
+/**
+ * This function runs on deactivation and flushes the re-write rules so permalinks work properly
+ * 
+ * @since 1.0 
+ */
+function dal_apps_portfolio_deactivation() {
+    
+    flush_rewrite_rules();
+}
+
+
+add_action( 'after_setup_theme', 'dal_apps_portfolio_init' );
+/**
+ * Initializes the plugin
+ * Includes the libraries, defines global variables, instantiates the class
+ *
+ * @since 0.9
+ */
+function dal_apps_portfolio_init() {
+    global $_dal_apps_portfolio;
+
+    define( 'ACP_URL', plugin_dir_url( __FILE__ ) );
+    define( 'ACP_VERSION', '1.1' );
+
+    /** Includes **/
+    require_once( dirname( __FILE__ ) . '/includes/class-portfolio.php' );
+
+
+    /** Instantiate **/
+    $_dal_apps_portfolio = new dal_apps_Portfolio;
+
+}
 
 
 ?>

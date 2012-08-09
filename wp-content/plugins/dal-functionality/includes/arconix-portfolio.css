@@ -1,0 +1,47 @@
+.dal_apps-portfolio-list {
+    list-style-type: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.dal_apps-portfolio-list-item {
+    float: left;
+    margin-right: 1.5% !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 0 !important;
+    width: 275px;
+}
+
+.dal_apps-portfolio-excerpt p,
+.dal_apps-portfolio-content p {
+    margin-bottom: 0 !important;
+}
+
+.dal_apps-portfolio-tax-list {
+    font-size: 11px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+/* Twenty-Eleven styling */
+.twenty-eleven .dal_apps-portfolio-excerpt p,
+.twenty-eleven .dal_apps-portfolio-content p {
+    border-top: 1px solid #DDDDDD;
+    padding-top: 3px;
+}
+.twenty-eleven h3.dal_apps-portfolio-title {
+    font-size: 16px !important;
+    margin-bottom: 0 !important;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.twenty-eleven .attachment-portfolio-thumb {
+    border: 1px solid #ddd;
+    padding: 3px;
+}
+
+/* Twenty-Ten styling */
+.twenty-ten h3.dal_apps-portfolio-title {
+    margin-bottom: 0 !important;
+}

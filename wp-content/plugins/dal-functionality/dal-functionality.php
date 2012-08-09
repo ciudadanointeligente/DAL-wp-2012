@@ -164,8 +164,8 @@ add_action('thematic_abovemainasides', 'my_above_asides');
 
 
 
-add_action( 'init', 'create_post_type' );
-function create_post_type() {
+add_action( 'init', 'create_dal_post_type' );
+function create_dal_post_type() {
   register_post_type( 'dal_country_sponsor',
     array(
       'labels' => array(
@@ -186,6 +186,28 @@ function create_post_type() {
     'public' => true,
     'has_archive' => false,
     'supports' => array( 'title', 'thumbnail', 'excerpt' )
+    )
+  );
+  register_post_type( 'dal_regional_sponsor',
+    array(
+      'labels' => array(
+        'name' => __( 'Sponsors Regionales' ),
+        'singular_name' => __( 'Sponsor Regional' ),
+        'add_new' => _x('Add New', 'Sponsor Regional'),
+        'add_new_item' => __('Add New Regional Sponsor'),
+        'edit_item' => __('Edit Regional Sponsor'),
+        'new_item' => __('New Regional Sponsor'),
+        'all_items' => __('All Regional Sponsors'),
+        'view_item' => __('View Regional Sponsor'),
+        'search_items' => __('Search Regional Sponsors'),
+        'not_found' =>  __('No Regional Sponsors found'),
+        'not_found_in_trash' => __('No Regional Sponsors found in Trash'), 
+        'parent_item_colon' => '',
+        'menu_name' => __('Regional Sponsors')
+      ),
+    'public' => true,
+    'has_archive' => false,
+    'supports' => array( 'title', 'thumbnail', 'excerpt', 'custom-fields' )
     )
   );
 }

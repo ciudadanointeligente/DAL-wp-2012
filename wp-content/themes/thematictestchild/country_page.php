@@ -63,6 +63,9 @@ Template Name: country_page
 	        
 	        	// calling the sponsors area
 	        	get_template_part( 'local-sponsors' );
+
+	        	// calling the latest post area
+	        	get_template_part( 'country-posts-list' );
 	        ?>
 	
 			</div><!-- #content -->

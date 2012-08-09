@@ -1,7 +1,7 @@
 <?php
 
 // Define the post type text here, allowing us to quickly re-use this code in other projects
-$ac_pt = 'dal_portfolio'; // must be the registered post type
+$ac_pt = 'portfolio'; // must be the registered post type
 $ac_pt_p = 'Portfolio Items';
 $ac_pt_s = 'Portfolio Item';
 

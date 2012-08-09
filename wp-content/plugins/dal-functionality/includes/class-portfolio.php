@@ -61,27 +61,26 @@ class Dal_apps_Portfolio {
 	$args = apply_filters( 'dal_apps_portfolio_post_type_args',
 	    array(
 		'labels' => array(
-		    'name' => __( 'App', 'acp' ),
-		    'singular_name' => __( 'App', 'acp' ),
+		    'name' => __( 'dal_portfolio', 'acp' ),
+		    'singular_name' => __( 'dal_portfolio', 'acp' ),
 		    'add_new' => __( 'Add New', 'acp' ),
-		    'add_new_item' => __( 'Add New App', 'acp' ),
+		    'add_new_item' => __( 'Add New dal_portfolio Item', 'acp' ),
 		    'edit' => __( 'Edit', 'acp' ),
-		    'edit_item' => __( 'Edit App', 'acp' ),
-		    'new_item' => __( 'New App', 'acp' ),
-		    'view' => __( 'View App', 'acp' ),
-		    'view_item' => __( 'View App', 'acp' ),
-		    'search_items' => __( 'Search apps', 'acp' ),
-		    'not_found' => __( 'No apps found', 'acp' ),
-		    'not_found_in_trash' => __( 'No apps found in Trash', 'acp' )
+		    'edit_item' => __( 'Edit dal_portfolio Item', 'acp' ),
+		    'new_item' => __( 'New Item', 'acp' ),
+		    'view' => __( 'View dal_portfolio', 'acp' ),
+		    'view_item' => __( 'View dal_portfolio Item', 'acp' ),
+		    'search_items' => __( 'Search dal_portfolio', 'acp' ),
+		    'not_found' => __( 'No dal_portfolio items found', 'acp' ),
+		    'not_found_in_trash' => __( 'No dal_portfolio items found in Trash', 'acp' )
 		),
 		'public' => true,
 		'query_var' => true,
 		'menu_position' => 20,
 		'menu_icon' => ACP_URL . 'images/portfolio-icon-16x16.png',
 		'has_archive' => false,
-		'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'tags'  ),
-		'rewrite' => array( 'slug' => 'dal_portfolio', 'with_front' => false ),
-        'taxonomies' => array('post_tag')
+		'supports' => array( 'title', 'editor', 'thumbnail' ),
+		'rewrite' => array( 'slug' => 'dal_portfolio', 'with_front' => false )
 	    )
 	);
 
@@ -123,7 +122,7 @@ class Dal_apps_Portfolio {
 	);
 
 
-	register_taxonomy( 'feature', 'dal_portfolio', $args );
+	register_taxonomy( 'feature', 'portfolio', $args );
 
     }
 
@@ -265,13 +264,13 @@ class Dal_apps_Portfolio {
 		'link' => 'image',
 		'thumb' => 'portfolio-thumb',
 		'full' => 'portfolio-large',
-        'title' => 'above',
+                'title' => 'above',
 		'display' => '',
-        'heading' => 'Display',
+                'heading' => 'Display',
 		'orderby' => 'date',
 		'order' => 'desc',
-        'terms' => '',
-        'operator' => 'IN'
+                'terms' => '',
+                'operator' => 'IN'
 	    )
 	);
 

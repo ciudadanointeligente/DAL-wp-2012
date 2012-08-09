@@ -18,7 +18,7 @@ add_action( 'init', 'create_pais_taxonomy', 0 );
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
-		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
+		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'portfolio', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
 		  wp_insert_term('Argentina', 'pais');
       wp_insert_term('Bolivia', 'pais');
@@ -48,11 +48,13 @@ function create_pais_taxonomy() {
 
  function add_pais_box() {
  	remove_meta_box('tagsdiv-pais', 'page','core');
-    remove_meta_box('tagsdiv-pais', 'post','core');
+  remove_meta_box('tagsdiv-pais', 'post','core');
   remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
+  remove_meta_box('tagsdiv-pais', 'portfolio','core');
 	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','page', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','post', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_country_sponsor', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','portfolio', 'side', 'core');
 }	
  
 function add_pais_menus() {

@@ -106,14 +106,6 @@ class Arconix_Portfolio {
 		    'all_items' => __( 'All Features', 'acp' ),
 		    'parent_item' => null,
 		    'parent_item_colon' => null,
-		    'edit_item' => __( 'Edit Feature' , 'acp' ),
-		    'update_item' => __( 'Update Feature', 'acp' ),
-		    'add_new_item' => __( 'Add New Feature', 'acp' ),
-		    'new_item_name' => __( 'New Feature Name', 'acp' ),
-		    'separate_items_with_commas' => __( 'Separate features with commas', 'acp' ),
-		    'add_or_remove_items' => __( 'Add or remove features', 'acp' ),
-		    'choose_from_most_used' => __( 'Choose from the most used features', 'acp' ),
-		    'menu_name' => __( 'Features', 'acp' ),
 		    'edit_item' => __( 'Edit Premiado' , 'acp' ),
 		    'update_item' => __( 'Update Premiado', 'acp' ),
 		    'add_new_item' => __( 'Add New Premiado', 'acp' ),
@@ -127,7 +119,6 @@ class Arconix_Portfolio {
 		'show_ui' => true,
 		'update_count_callback' => '_update_post_term_count',
 		'query_var' => true,
-		'rewrite' => array( 'slug' => 'feature' )
 		'rewrite' => array( 'slug' => 'Premiados' )
 	    )
 	);

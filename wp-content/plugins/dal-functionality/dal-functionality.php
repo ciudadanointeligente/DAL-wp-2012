@@ -18,7 +18,7 @@ add_action( 'init', 'create_pais_taxonomy', 0 );
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
-		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'portfolio', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
+		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
 		  wp_insert_term('Argentina', 'pais');
       wp_insert_term('Bolivia', 'pais');
@@ -50,11 +50,9 @@ function create_pais_taxonomy() {
  	remove_meta_box('tagsdiv-pais', 'page','core');
   remove_meta_box('tagsdiv-pais', 'post','core');
   remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
-  remove_meta_box('tagsdiv-pais', 'portfolio','core');
 	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','page', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','post', 'side', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_country_sponsor', 'side', 'core');
-  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','portfolio', 'side', 'core');
 }	
  
 function add_pais_menus() {
@@ -212,6 +210,100 @@ function create_dal_post_type() {
     'supports' => array( 'title', 'thumbnail', 'excerpt', 'custom-fields' )
     )
   );
+}
+
+//
+//
+//======================== add apppais
+//
+//
+//
+// 1- Agrega taxonomía "paises" con dropdown para pages.
+//
+
+ 
+
+ function add_apppais_box() {
+  remove_meta_box('tagsdiv-apppais', 'portfolio','core');
+  add_meta_box('apppais_box_ID', __('apppais'), 'apppais_styling_function','portfolio','side','high');
+} 
+ 
+function add_apppais_menus() {
+ 
+  if ( ! is_admin() )
+    return;
+ 
+  add_action('admin_menu', 'add_apppais_box');
+
+  //Use the save_post action to save new post data 
+  add_action('save_post', 'save_apppais_data');
+}
+ 
+add_apppais_menus();
+
+
+// This function gets called in edit-form-advanced.php
+function apppais_styling_function($post) {
+ 
+  echo '<input type="hidden" name="taxonomy_noncename" id="taxonomy_noncename" value="' . 
+        wp_create_nonce( 'taxonomy_apppais' ) . '" />';
+ 
+ 
+  // Get all apppais taxonomy terms
+  $apppaises = get_terms('apppais', 'hide_empty=0'); 
+ 
+?>
+<select name='post_apppais' id='post_apppais'>
+  <!-- Display apppaises as options -->
+    <?php 
+        $names = wp_get_object_terms($post->ID, 'apppais'); 
+        ?>
+        <option class='apppais-option' value='' 
+        <?php if (!count($names)) echo "selected";?>>Ninguno</option>
+        <?php
+  foreach ($apppaises as $apppais) {
+    if (!is_wp_error($names) && !empty($names) && !strcmp($apppais->slug, $names[0]->slug)) 
+      echo "<option class='apppais-option' value='" . $apppais->slug . "' selected>" . $apppais->name . "</option>\n"; 
+    
+    else
+      echo "<option class='apppais-option' value='" . $apppais->slug . "'>" . $apppais->name . "</option>\n"; 
+  }
+
+   ?>
+</select>    
+<?php
+}
+
+function save_apppais_data($post_id) {
+// verify this came from our screen and with proper authorization.
+ 
+  if ( !wp_verify_nonce( $_POST['taxonomy_noncename'], 'taxonomy_apppais' )) {
+      return $post_id;
+    }
+ 
+    // verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+      return $post_id;
+ 
+ 
+    // Check permissions
+    if ( 'page' == $_POST['post_type'] ) {
+      if ( !current_user_can( 'edit_page', $post_id ) )
+          return $post_id;
+    } else {
+      if ( !current_user_can( 'edit_post', $post_id ) )
+        return $post_id;
+    }
+ 
+    // OK, we're authenticated: we need to find and save the data
+  $post = get_post($post_id);
+  if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio')){ 
+           // OR $post->post_type != 'revision'
+           $apppais = $_POST['post_apppais'];
+     wp_set_object_terms( $post_id, $apppais, 'apppais' );
+        }
+  return $apppais;
+ 
 }
 
 

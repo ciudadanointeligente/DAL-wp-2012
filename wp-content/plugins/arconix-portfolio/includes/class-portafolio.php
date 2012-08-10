@@ -130,6 +130,35 @@ class Arconix_Portfolio {
         register_taxonomy( 'apps_tags', 'portfolio', array( 'hierarchical' => false, 'label' => __('apps_tags'), 'query_var' => 'apps_tags', 'rewrite' => array( 'slug' => 'apps_tags' ) ) );
         };
 
+    if (!taxonomy_exists('apps_tracks')) {
+        register_taxonomy( 'apps_tracks', 'portfolio', array( 'hierarchical' => True, 'label' => __('track'), 'query_var' => 'track', 'rewrite' => array( 'slug' => 'track' ) ) );
+        };
+
+     if (!taxonomy_exists('apppais')) {
+        register_taxonomy( 'apppais', 'portfolio', array( 'hierarchical' => false, 'label' => __('país de la app'), 'query_var' => 'apppais', 'rewrite' => array( 'slug' => 'apppais' ) ) );
+        
+      wp_insert_term('Argentina', 'apppais');
+      wp_insert_term('Bolivia', 'apppais');
+      wp_insert_term('Brasil', 'apppais');
+      wp_insert_term('Chile', 'apppais');
+      wp_insert_term('Colombia', 'apppais');
+      wp_insert_term('Costa Rica', 'apppais');
+      wp_insert_term('Cuba', 'apppais');
+      wp_insert_term('Ecuador', 'apppais');
+      wp_insert_term('El Salvador', 'apppais');
+      wp_insert_term('Guatemala', 'apppais');
+      wp_insert_term('Haití', 'apppais');
+      wp_insert_term('Honduras', 'apppais');
+      wp_insert_term('México', 'apppais');
+      wp_insert_term('Nicaragua', 'apppais');
+      wp_insert_term('Panamá', 'apppais');
+      wp_insert_term('Paraguay', 'apppais');
+      wp_insert_term('Perú', 'apppais');
+      wp_insert_term('República Dominicana', 'apppais');
+      wp_insert_term('Uruguay', 'apppais');
+      wp_insert_term('Venezuela', 'apppais');
+        };
+
     }
 
     /**

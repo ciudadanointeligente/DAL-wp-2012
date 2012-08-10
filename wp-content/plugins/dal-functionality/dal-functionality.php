@@ -126,7 +126,7 @@ function save_taxonomy_data($post_id) {
  
   	// OK, we're authenticated: we need to find and save the data
 	$post = get_post($post_id);
-	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post')) { 
+	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio')){ 
            // OR $post->post_type != 'revision'
            $pais = $_POST['post_pais'];
 	   wp_set_object_terms( $post_id, $pais, 'pais' );

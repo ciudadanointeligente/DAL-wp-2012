@@ -64,7 +64,7 @@
 						
 					</div><!-- .entry-content -->
 					
-					<?php// thematic_postfooter(); ?>
+					<?php thematic_postfooter(); ?>
 					
 				</div><!-- #post -->
 		<?php

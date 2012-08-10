@@ -29,6 +29,7 @@ function arconix_portfolio_activation() {
 	global $_arconix_portfolio;
 	$_arconix_portfolio->create_post_type();
 	$_arconix_portfolio->create_taxonomy();
+    $_arconix_portfolio->create_appstag_taxonomy();
     }
     flush_rewrite_rules();
 }
@@ -59,7 +60,7 @@ function arconix_portfolio_init() {
     define( 'ACP_VERSION', '1.1' );
 
     /** Includes **/
-    require_once( dirname( __FILE__ ) . '/includes/class-portfolio.php' );
+    require_once( dirname( __FILE__ ) . '/includes/class-portafolio.php' );
 
 
     /** Instantiate **/

@@ -29,7 +29,6 @@ function arconix_portfolio_activation() {
 	global $_arconix_portfolio;
 	$_arconix_portfolio->create_post_type();
 	$_arconix_portfolio->create_taxonomy();
-    $_arconix_portfolio->create_appstag_taxonomy();
     }
     flush_rewrite_rules();
 }

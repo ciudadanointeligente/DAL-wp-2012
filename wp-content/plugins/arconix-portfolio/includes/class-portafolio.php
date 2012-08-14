@@ -184,19 +184,19 @@ class Arconix_Portfolio {
 
 	$messages['portfolio'] = array(
 	    0 => '', // Unused. Messages start at index 1.
-	    1 => sprintf( __('Portfolio Item updated. <a href="%s">View portfolio item</a>'), esc_url( get_permalink($post_ID) ) ),
+	    1 => sprintf( __('DAL Portfolio Item updated. <a href="%s">View app</a>'), esc_url( get_permalink($post_ID) ) ),
 	    2 => __('Custom field updated.'),
 	    3 => __('Custom field deleted.'),
-	    4 => __('Portfolio item updated.'),
+	    4 => __('DAL Portfolio item updated.'),
 	    /* translators: %s: date and time of the revision */
-	    5 => isset($_GET['revision']) ? sprintf( __('Portfolio item restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-	    6 => sprintf( __('Portfolio item published. <a href="%s">View portfolio item</a>'), esc_url( get_permalink($post_ID) ) ),
-	    7 => __('Portfolio item saved.'),
-	    8 => sprintf( __('Portfolio item submitted. <a target="_blank" href="%s">Preview portfolio item</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-	    9 => sprintf( __('Portfolio item scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview portfolio item</a>'),
+	    5 => isset($_GET['revision']) ? sprintf( __('DAL Portfolio item restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+	    6 => sprintf( __('DAL Portfolio item published. <a href="%s">View app </a>'), esc_url( get_permalink($post_ID) ) ),
+	    7 => __('DAL Portfolio item saved.'),
+	    8 => sprintf( __('DAL Portfolio item submitted. <a target="_blank" href="%s">Preview portfolio item</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	    9 => sprintf( __('DAL Portfolio item scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview DAL portfolio item</a>'),
 	      // translators: Publish box date format, see http://php.net/date
 	      date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-	    10 => sprintf( __('Portfolio item draft updated. <a target="_blank" href="%s">Preview portfolio item</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	    10 => sprintf( __('DAL Portfolio item draft updated. <a target="_blank" href="%s">Preview app</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 	);
 
       return $messages;

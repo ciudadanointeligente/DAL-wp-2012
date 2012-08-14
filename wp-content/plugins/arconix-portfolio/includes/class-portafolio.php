@@ -40,7 +40,7 @@ class Arconix_Portfolio {
 	add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widget' ) );
 
         /** Add Shortcode */
-	add_shortcode( 'portfolio', array( $this, 'portfolio_shortcode' ) );
+	add_shortcode( 'dal_portfolio', array( $this, 'portfolio_shortcode' ) );
     add_filter( 'widget_text', 'do_shortcode' );
 
       if (function_exists('mfields_set_default_object_terms')) {
@@ -302,7 +302,6 @@ class Arconix_Portfolio {
 
 	/** Load the javascript */
 	self::$load_js = true;
-
 	/** Shortcode defaults */
 	$defaults = apply_filters( 'arconix_portfolio_shortcode_args',
 	    array(
@@ -315,10 +314,11 @@ class Arconix_Portfolio {
 		'orderby' => 'date',
 		'order' => 'desc',
         'terms' => '',
-        'operator' => 'IN'
+        'operator' => 'IN',
+        'apppais'=>$apppais,
 	    )
 	);
-
+    print_r($apppais);
 	extract( shortcode_atts( $defaults, $atts ) );
         
         if( $title == "yes" ) $title == "above"; // For backwards compatibility
@@ -331,26 +331,51 @@ class Arconix_Portfolio {
         'meta_key' => '_thumbnail_id', // Should pull only items with featured images
 		'orderby' => $orderby,
 		'order' => $order,
+
 	    )
 	);
+    print_r($apppais);
 
-        /** If the user has defined any tax terms, then we create our tax_query and merge to our main query  */
-        if( $terms ) {
+        /** If the user has defined any tax (feature) terms, then we create our tax_query and merge to our main query  */
+        //si tiene un lugar hace esto
+        if( $apppais ) {
             
             $tax_query_args = array(
                 'tax_query' => array(
-                    array(
-                        'taxonomy' => 'feature',
+                   /*array(
+                        'taxonomy' =>'feature',
                         'field' => 'slug',
                         'terms' => $terms,
                         'operator' => $operator  
-                      )                    
+
+                      ),*/
+                    array(
+                        'taxonomy' => 'apppais',
+                        'terms' => $apppais,
+                        'field' => 'slug',
+                    )         
+                     
                 )            
             );
             
             /** Join the tax array to the general query */
             $args = array_merge( $args, $tax_query_args );
-        }	
+        }
+        //si tiene un pais agrega esto
+    /*if ($apppais){
+        $tax_query_args2= array(
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'apppais',
+                        'field' => 'slug',
+                        'terms' => $apppais,
+                        'operator' => $operator  
+
+                      )                    
+                )            
+            );
+        $args = array_merge( $args, $tax_query_args2 );
+    }*/
 
 	$return = '';
 
@@ -358,8 +383,8 @@ class Arconix_Portfolio {
 	$portfolio_query = new WP_Query( $args );
 
         if( $portfolio_query->have_posts() ) {
-            
             $a ='';
+
             
             if( $terms ) {
                 
@@ -378,6 +403,7 @@ class Arconix_Portfolio {
                 }
                 
             }
+
 
             /** We're simply recycling the variable at this point */
             $terms = get_terms( 'feature', $a );
@@ -406,6 +432,7 @@ class Arconix_Portfolio {
 
                 /** Get the terms list */
                 $terms = get_the_terms( get_the_ID(), 'feature' );
+                
 
                 /** Add each term for a given portfolio item as a data type so it can be filtered by Quicksand */
                 $return .= '<li data-id="id-' . get_the_ID() . '" data-type="';

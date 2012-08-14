@@ -21,6 +21,7 @@ jQuery(document).ready(function(){
 		
         // Set Our Filter Link
         $filterLink = jQuery('.arconix-portfolio-features li a');
+        
 		
         // Set Our Container
         $container = jQuery('ul.arconix-portfolio-grid');
@@ -47,7 +48,7 @@ jQuery(document).ready(function(){
                 $filteredItems = $containerClone.find('li'); 
             }
             else {
-                $filteredItems = $containerClone.find('li[data-type~=' + $filter + ']'); 
+                $filteredItems = $containerClone.find('li[data-type~=' + $filter + ']');
             }
 			
             // Finally call the Quicksand function

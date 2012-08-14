@@ -16,6 +16,7 @@ class Arconix_Portfolio {
         /** Post Type and Taxonomy creation */
 	add_action( 'init', array( $this, 'create_post_type' ) );
 	add_action( 'init', array( $this, 'create_taxonomy' ) );
+   
 
         /** Post Thumbnail Support */
         add_action( 'after_setup_theme', array( $this, 'add_post_thumbnail_support' ), '9999' );
@@ -40,7 +41,11 @@ class Arconix_Portfolio {
 
         /** Add Shortcode */
 	add_shortcode( 'portfolio', array( $this, 'portfolio_shortcode' ) );
-        add_filter( 'widget_text', 'do_shortcode' );
+    add_filter( 'widget_text', 'do_shortcode' );
+
+      if (function_exists('mfields_set_default_object_terms')) {
+            add_action( 'save_post', 'mfields_set_default_object_terms', 100, 2 );
+        }
 
     }
 
@@ -122,10 +127,12 @@ class Arconix_Portfolio {
 		'rewrite' => array( 'slug' => 'Premiados' )
 	    )
 	);
+  
+    if (!taxonomy_exists('feature')) {
+    	register_taxonomy( 'feature', 'portfolio', $args );
+        wp_insert_term('empty', 'feature');
+        }
 
-
-	register_taxonomy( 'feature', 'portfolio', $args );
-    
     if (!taxonomy_exists('apps_tags')) {
         register_taxonomy( 'apps_tags', 'portfolio', array( 'hierarchical' => false, 'label' => __('apps_tags'), 'query_var' => 'apps_tags', 'rewrite' => array( 'slug' => 'apps_tags' ) ) );
         };
@@ -160,6 +167,8 @@ class Arconix_Portfolio {
         };
 
     }
+
+
 
     /**
      * Correct messages when Portfolio post type is saved
@@ -267,6 +276,7 @@ class Arconix_Portfolio {
      * @version 1.1
      */
     function portfolio_shortcode( $atts, $content = null ) {
+        print_r($atts);
 	/*
 	Supported Attributes
 	    link =>  'page', image
@@ -318,7 +328,7 @@ class Arconix_Portfolio {
 	    array(
 		'post_type' => 'portfolio',
 		'posts_per_page' => -1, // show all
-                'meta_key' => '_thumbnail_id', // Should pull only items with featured images
+        'meta_key' => '_thumbnail_id', // Should pull only items with featured images
 		'orderby' => $orderby,
 		'order' => $order,
 	    )
@@ -581,6 +591,38 @@ class Arconix_Portfolio {
             #ac-portfolio .acp-widget-bottom img { padding-right: 3px; vertical-align: top; }
         </style>';
     }
+/**
+ * Define default terms for custom taxonomies in WordPress 3.0.1
+ *
+ * @author    Michael Fields     http://wordpress.mfields.org/
+ * @props     John P. Bloch      http://www.johnpbloch.com/
+ *
+ * @since     2010-09-13
+ * @alter     2010-09-14
+ *
+ * @license   GPLv2
+ */
+function mfields_set_default_object_terms( $post_id, $post ) {
+    if ( 'publish' === $post->post_status ) {
+        $defaults = array(
+            'feature' => array( 'empty' ),
+            );
+        $taxonomies = get_object_taxonomies( $post->post_type );
+        foreach ( (array) $taxonomies as $taxonomy ) {
+            $terms = wp_get_post_terms( $post_id, $taxonomy );
+            if ( empty( $terms ) && array_key_exists( $taxonomy, $defaults ) ) {
+                wp_set_object_terms( $post_id, $defaults[$taxonomy], $taxonomy );
+            }
+        }
+    }
+}
+
+
+
 
 }
+
+
+
+
 ?>

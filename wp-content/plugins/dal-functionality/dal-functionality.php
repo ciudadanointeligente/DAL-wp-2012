@@ -306,6 +306,3 @@ function save_apppais_data($post_id) {
  
 }
 
-
-
-?>

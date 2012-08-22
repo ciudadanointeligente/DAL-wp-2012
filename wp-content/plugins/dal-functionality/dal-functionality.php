@@ -311,6 +311,14 @@ function save_apppais_data($post_id) {
 require_once( dirname( __FILE__ ) . '/includes/apppais_metaboxes.php' );
 
 
+//
+//=========== 6- Include reusable metaboxes 
+
+
+require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/add_meta_box.php' );
+
+
+
 
 
 

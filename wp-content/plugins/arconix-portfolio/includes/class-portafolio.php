@@ -276,7 +276,7 @@ class Arconix_Portfolio {
      * @version 1.1
      */
     function portfolio_shortcode( $atts, $content = null ) {
-        print_r($atts);
+        
 	/*
 	Supported Attributes
 	    link =>  'page', image
@@ -318,7 +318,7 @@ class Arconix_Portfolio {
         'apppais'=>$apppais,
 	    )
 	);
-    print_r($apppais);
+
 	extract( shortcode_atts( $defaults, $atts ) );
         
         if( $title == "yes" ) $title == "above"; // For backwards compatibility
@@ -334,7 +334,6 @@ class Arconix_Portfolio {
 
 	    )
 	);
-    print_r($apppais);
 
         /** If the user has defined any tax (feature) terms, then we create our tax_query and merge to our main query  */
         //si tiene un lugar hace esto

@@ -13,8 +13,8 @@ Author URI: http://ciudadanointeligente.org
 // 1- Agrega taxonomía "paises" con dropdown para pages.
 //
 
-
 add_action( 'init', 'create_pais_taxonomy', 0 );
+
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
@@ -67,7 +67,6 @@ function add_pais_menus() {
 }
  
 add_pais_menus();
-
 
 // This function gets called in edit-form-advanced.php
 function your_styling_function($post) {
@@ -218,7 +217,7 @@ function create_dal_post_type() {
 //
 //
 //
-// 1- Agrega taxonomía "paises" con dropdown para pages.
+// 4- Agrega taxonomía "apppais" con dropdown para cpt apps./ importante para que no se confundan las queries de apps con las del blog
 //
 
  
@@ -305,4 +304,14 @@ function save_apppais_data($post_id) {
   return $apppais;
  
 }
+
+//
+//=========== 5- Include metaboxes for apppais
+
+require_once( dirname( __FILE__ ) . '/includes/apppais_metaboxes.php' );
+
+
+
+
+
 

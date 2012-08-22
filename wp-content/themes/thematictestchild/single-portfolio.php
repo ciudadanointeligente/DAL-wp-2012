@@ -16,7 +16,7 @@
 ?>
 
 		<div id="container">
-			hola portfolioooooo
+			
 			
 			<?php
 				// action hook for placing content above #content
@@ -59,6 +59,15 @@
 					<div class="entry-content">
 						<?php the_post_thumbnail( $size, $attr ); ?> 
 						<?php thematic_content(); ?>
+						<div class="infoApp">
+							<!--get the array of data1-->
+							<?php $urlbox = get_url_desc_box(); ?>
+							<?php	echo $urlbox[0]; // echo out the url of a post ?>
+
+
+							<?php echo $urlbox[1]; // echo out the url description of a post >	
+							?>
+						</div>
 
 						<?php wp_link_pages('before=<div class="page-link">' . __('Pages:', 'thematic') . '&after=</div>') ?>
 						
@@ -71,7 +80,7 @@
 			// action hook for insterting content below #post
 			thematic_belowpost();
     	        ?>
-				<h1>eeeeee</h1>		
+				<h1>Below post h1 </h1>		
     	        <?php
 			
     	        // calling the widget area 'single-insert'

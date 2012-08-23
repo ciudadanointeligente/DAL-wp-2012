@@ -3,10 +3,10 @@
 // Add the Meta Box
 function add_custom_meta_box() {
     add_meta_box(
-		'custom_meta_box', // $id
-		'Custom Meta Box', // $title 
-		'show_custom_meta_box', // $callback
-		'post', // $page
+		'app_meta_box', // $id
+		'App Info', // $title 
+		'show_app_meta_box', // $callback
+		'portfolio', // $page
 		'normal', // $context
 		'high'); // $priority
 }
@@ -16,16 +16,104 @@ add_action('add_meta_boxes', 'add_custom_meta_box');
 $prefix = 'custom_';
 $custom_meta_fields = array(
 	array(
-		'label'	=> 'Text Input',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'text',
+		'label'	=> 'Año',
+		'desc'	=> '',
+		'id'	=> $prefix.'ano',
+		'type'	=> 'select',
+		'options' => array (
+			'one' => array (
+				'label' => '2012',
+				'value'	=> '2012'
+				
+			),
+			'two' => array (
+				'label' => '2011',
+				'value'	=> '2011'
+				
+			),
+			'three' => array (
+				'label' => '2013',
+				'value'	=> '2013'
+			)
+		)
+	),
+	array(
+		'label'	=> 'País',
+		'id'	=> 'apppais',
+		'type'	=> 'tax_select'
+	),
+	array(
+		'label'	=> 'Track en que participa la app',
+		'id'	=> 'apps_tracks',
+		'type'	=> 'tax_select'
+	),
+
+	array(
+		'label'	=> 'Nombre del equipo',
+		'desc'	=> 'Nombre del equipo participante',
+		'id'	=> $prefix.'equipo',
 		'type'	=> 'text'
 	),
+
+	
+	array(
+		'label'	=> 'Integrantes',
+		'desc'	=> 'Agrega los nombres de los integrantes del grupo',
+		'id'	=> $prefix.'integrante',
+		'type'	=> 'repeatable'
+	),
+	
+	array(
+		'label'	=> 'Problema que soluciona',
+		'desc'	=> 'Describe la problemática que aborda tu aplicación, si te inspiraste en alguna idea surgida en los meetups por favor agrega el link.',
+		'id'	=> $prefix.'problema',
+		'type'	=> 'textarea'
+	),
+
+	array(
+		'label'	=> 'Solución planteada',
+		'desc'	=> 'Cómo tu aplicación soluciona este problema',
+		'id'	=> $prefix.'solucion',
+		'type'	=> 'textarea'
+	),
+	array(
+		'label'	=> 'Datos Utilizados',
+		'desc'	=> 'Link de las bases de datos usadas en el desarrollo de la app.',
+		'id'	=> $prefix.'databases',
+		'type'	=> 'repeatable'
+	),
+	array(
+		'label'	=> 'Link a la aplicación',
+		'desc'	=> 'URL de la app',
+		'id'	=> $prefix.'urlapp',
+		'type'	=> 'text'
+	),
+	array(
+		'label'	=> 'Screencast',
+		'desc'	=> 'Embed code del screencast',
+		'id'	=> $prefix.'databases',
+		'type'	=> 'textarea'
+	),
+
+	array(
+		'label'	=> 'Github',
+		'desc'	=> 'Link al proyecto en github',
+		'id'	=> $prefix.'github',
+		'type'	=> 'text'
+	),
+
 	array(
 		'label'	=> 'Textarea',
 		'desc'	=> 'A description for the field.',
 		'id'	=> $prefix.'textarea',
 		'type'	=> 'textarea'
+	)
+	/*
+	array(
+		'label'	=> 'Text Input',
+		'desc'	=> 'A description for the field.',
+		'id'	=> $prefix.'text',
+		'type'	=> 'text'
 	),
 	array(
 		'label'	=> 'Checkbox Input',
@@ -73,6 +161,11 @@ $custom_meta_fields = array(
 			)
 		)
 	),
+	array(
+		'label'	=> 'apppais',
+		'id'	=> 'apppais',
+		'type'	=> 'tax_select'
+	),
 	array (
 		'label'	=> 'Checkbox Group',
 		'desc'	=> 'A description for the field.',
@@ -93,11 +186,7 @@ $custom_meta_fields = array(
 			)
 		)
 	),
-	array(
-		'label'	=> 'Category',
-		'id'	=> 'category',
-		'type'	=> 'tax_select'
-	),
+	
 	array(
 		'label'	=> 'Post List',
 		'desc'	=> 'A description for the field.',
@@ -125,13 +214,8 @@ $custom_meta_fields = array(
 		'desc'	=> 'A description for the field.',
 		'id'	=> $prefix.'image',
 		'type'	=> 'image'
-	),
-	array(
-		'label'	=> 'Repeatable',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'repeatable',
-		'type'	=> 'repeatable'
-	)
+	),*/
+	
 );
 
 // enqueue scripts and styles, but only if is_admin
@@ -179,7 +263,7 @@ function add_custom_scripts() {
 }
 
 // The Callback
-function show_custom_meta_box() {
+function show_app_meta_box() {
 	global $custom_meta_fields, $post;
 	// Use nonce for verification
 	echo '<input type="hidden" name="custom_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
@@ -310,10 +394,10 @@ function show_custom_meta_box() {
 	echo '</table>'; // end table
 }
 
-function remove_taxonomy_boxes() {
+/*function remove_taxonomy_boxes() {
 	remove_meta_box('categorydiv', 'post', 'side');
 }
-add_action( 'admin_menu' , 'remove_taxonomy_boxes' );
+add_action( 'admin_menu' , 'remove_taxonomy_boxes' );*/
 
 // Save the Data
 function save_custom_meta($post_id) {
@@ -351,5 +435,4 @@ function save_custom_meta($post_id) {
 	wp_set_object_terms( $post_id, $category, 'category' );
 }
 add_action('save_post', 'save_custom_meta');
-
 ?>

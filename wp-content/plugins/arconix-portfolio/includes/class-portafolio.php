@@ -85,7 +85,7 @@ class Arconix_Portfolio {
 		'menu_position' => 20,
 		'menu_icon' => ACP_URL . 'images/portfolio-icon-16x16.png',
 		'has_archive' => true,
-		'supports' => array( 'title', 'editor', 'thumbnail' ),
+		'supports' => array( 'title', 'thumbnail' ),
 		'rewrite' => array( 'slug' => 'portfolio', 'with_front' => false ),
         //'taxonomies' => array('post_tag')
 	    )

@@ -59,15 +59,38 @@
 					<div class="entry-content">
 						<?php the_post_thumbnail( $size, $attr ); ?> 
 						<?php thematic_content(); ?>
-						<div class="infoApp">
+						
+
+<br />
+	<div class="infoApp">
 							<!--get the array of data1-->
-							<?php $urlbox = get_url_desc_box(); ?>
-							<?php	echo $urlbox[0]; // echo out the url of a post ?>
-
-
-							<?php echo $urlbox[1]; // echo out the url description of a post >	
+							<?php $post_meta_data = get_post_custom($post->ID);
+			
 							?>
+
+							<?php echo $post_meta_data[custom_text][0]; // echo out the text input of a post >	
+							?>
+							
+							
+							<br />
+							<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
+							foreach ($custom_integrantes as $key => $custom_integrante) {
+							  	echo $custom_integrante; // echo out the url description of a post >	
+							  }  
+							 
+							?>	
+							<br />
+							<?php  $custom_repeatables = get_post_meta($post->ID, 'custom_repeatable', true);
+							foreach ($custom_repeatables as $key => $custom_repeatable) {
+							  	echo $custom_repeatable; // echo out the url description of a post >	
+							  }  
+							 
+							?>	
+							
+							
 						</div>
+
+
 
 						<?php wp_link_pages('before=<div class="page-link">' . __('Pages:', 'thematic') . '&after=</div>') ?>
 						

@@ -37,3 +37,10 @@ This work, like WordPress, is released under GNU General Public License, version
 
 body{color: blue;}
 
+.theThumbail .wp-post-image {
+border: 1px solid #CCC;
+float: left;
+margin: 0 0 20px 18px;
+padding: 5px;
+width: 50%;
+}

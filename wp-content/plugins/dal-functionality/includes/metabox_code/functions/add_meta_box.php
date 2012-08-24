@@ -55,14 +55,23 @@ $custom_meta_fields = array(
 		'type'	=> 'text'
 	),
 
-	
 	array(
 		'label'	=> 'Integrantes',
 		'desc'	=> 'Agrega los nombres de los integrantes del grupo',
 		'id'	=> $prefix.'integrante',
 		'type'	=> 'repeatable'
+
 	),
 	
+
+
+	array(
+		'label'	=> 'Datos Utilizados',
+		'desc'	=> 'Link de las bases de datos usadas en el desarrollo de la app',
+		'id'	=> $prefix.'database',
+		'type'	=> 'repeatablelink'
+	),
+
 	array(
 		'label'	=> 'Problema que soluciona',
 		'desc'	=> 'Describe la problemática que aborda tu aplicación, si te inspiraste en alguna idea surgida en los meetups por favor agrega el link.',
@@ -76,22 +85,17 @@ $custom_meta_fields = array(
 		'id'	=> $prefix.'solucion',
 		'type'	=> 'textarea'
 	),
-	array(
-		'label'	=> 'Datos Utilizados',
-		'desc'	=> 'Link de las bases de datos usadas en el desarrollo de la app.',
-		'id'	=> $prefix.'databases',
-		'type'	=> 'repeatable'
-	),
+
 	array(
 		'label'	=> 'Link a la aplicación',
 		'desc'	=> 'URL de la app',
 		'id'	=> $prefix.'urlapp',
-		'type'	=> 'text'
+		'type'	=> 'link'
 	),
 	array(
 		'label'	=> 'Screencast',
 		'desc'	=> 'Embed code del screencast',
-		'id'	=> $prefix.'databases',
+		'id'	=> $prefix.'screencast',
 		'type'	=> 'textarea'
 	),
 
@@ -99,16 +103,16 @@ $custom_meta_fields = array(
 		'label'	=> 'Github',
 		'desc'	=> 'Link al proyecto en github',
 		'id'	=> $prefix.'github',
-		'type'	=> 'text'
+		'type'	=> 'link'
 	),
-
+/*
 	array(
 		'label'	=> 'Textarea',
 		'desc'	=> 'A description for the field.',
 		'id'	=> $prefix.'textarea',
 		'type'	=> 'textarea'
 	)
-	/*
+	
 	array(
 		'label'	=> 'Text Input',
 		'desc'	=> 'A description for the field.',
@@ -283,6 +287,12 @@ function show_app_meta_box() {
 						echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
 								<br /><span class="description">'.$field['desc'].'</span>';
 					break;
+					//link
+					// text
+					case 'link':
+						echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30"  placeholder="http://url.com"/>
+								<br /><span class="description">'.$field['desc'].'</span>';
+					break;
 					// textarea
 					case 'textarea':
 						echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea>
@@ -377,6 +387,28 @@ function show_app_meta_box() {
 							foreach($meta as $row) {
 								echo '<li><span class="sort hndle">|||</span>
 											<input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="'.$row.'" size="30" />
+											<a class="repeatable-remove button" href="#">-</a></li>';
+								$i++;
+							}
+						} else {
+							echo '<li><span class="sort hndle">|||</span>
+										<input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="" size="30" />
+										<a class="repeatable-remove button" href="#">-</a></li>';
+						}
+						echo '</ul>
+							<span class="description">'.$field['desc'].'</span>';
+					break;
+
+
+					// repeatable link
+					case 'repeatablelink':
+						echo '<a class="repeatable-add button" href="#">+</a>
+								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
+						$i = 0;
+						if ($meta) {
+							foreach($meta as $row) {
+								echo '<li><span class="sort hndle">|||</span>
+											<input type="url" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="'.$row.'" size="30"  placeholder="http://url.com" />
 											<a class="repeatable-remove button" href="#">-</a></li>';
 								$i++;
 							}

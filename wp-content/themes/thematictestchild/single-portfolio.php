@@ -51,44 +51,103 @@
 					    thematic_post_class();
 					    echo '">';
 					}
-
-	            	// creating the post header
-	            	thematic_postheader();
 	            ?>
      				
-					<div class="entry-content">
-						<?php the_post_thumbnail( $size, $attr ); ?> 
-						<?php thematic_content(); ?>
-						
-
-<br />
-	<div class="infoApp">
-							<!--get the array of data1-->
-							<?php $post_meta_data = get_post_custom($post->ID);
+					<div class="">
 			
-							?>
+					<article class="entryApp entry-content">
+						<?php 
+						// creating the post header
+	            			thematic_postheader();
+						// thematic_content(); 
+	            		//getting post meta data
+							$post_meta_data = get_post_custom($post->ID);
+						?>
 
-							<?php echo $post_meta_data[custom_text][0]; // echo out the text input of a post >	
+						<section class="infoApp">
+							<div class="theThumbail">
+								<?php the_post_thumbnail( $size, $attr ); ?> 
+							</div>	
+							<div class="detailsApp" style="float: right;"> 
+								<ul id="infoAppUl">
+									<li> 
+										<strong>Equipo:</strong><span><?php echo $post_meta_data[custom_equipo][0]; ?></span>
+									</li>
+									<li> 
+										<strong>País:</strong><span><?php echo $post_meta_data[custom_apppais][0]; ?></span>
+									</li>
+									<li> 
+										<strong>Tema:</strong><span><?php echo $post_meta_data[custom_apps_tracks][0]; ?></span>
+									</li>
+									<li> 
+										<strong>Github:</strong>
+										<span>
+											<?php echo'<a href="'.$post_meta_data[custom_github][0].'">'.$post_meta_data[custom_github][0].'</a>'; ?>
+										</span>
+									</li>
+									<li><strong>Integrantes:</strong>
+										<ul>
+											<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
+												foreach ($custom_integrantes as $key => $custom_integrante) {
+												  	echo '<li>'.$custom_integrante.'</li>'; // echo out the url description of a post >	
+												}  
+									 		?>	
+										</ul>
+									</li>
+								</ul>	
+							</div>
+
+							<div class="botonApp" style="clear: both; display: block; background: lightgrey; padding: 10px; text-align: center;">
+								<?php 
+								echo'<a href="'.$post_meta_data[custom_urlapp][0].'">Ver la app <br /><span>'.$post_meta_data[custom_urlapp][0].'</span></a>';?>
+							</div>
+			
+						</section>
+						<section class="descApp" style="float: left; width: 50%;">
+							<?php 
+
+								
+
+								echo '<h3>Problemática</h3>';
+								echo apply_filters('the_content', $post_meta_data['custom_problema'][0]);
+								echo '<h3>Solución planteada</h3>';
+								echo apply_filters('the_content', $post_meta_data['custom_solucion'][0]);  
+								echo '<h3>Screencast</h3>';
+								echo $post_meta_data[custom_screencast][0];  
+								echo '<h3> Datos Utilizados</h3><ul class="databaseList">';
+
+									$custom_databases = get_post_meta($post->ID, 'custom_database', true);
+									
+									foreach ($custom_databases as $key => $custom_database) {
+										
+										 echo '<li><a href="http://'. $custom_database .'">'. $custom_database .'</a></li>'; 
+									}  
+							
+								echo '</ul>';
+
 							?>
+						</section>
+
+						<aside>
+							<h4> Sobre el equipo </h4>
+							<ul>
+
+							</ul>
+
+						</aside>
+-------<br/>
+							
+
+							
+
 							
 							
 							<br />
-							<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
-							foreach ($custom_integrantes as $key => $custom_integrante) {
-							  	echo $custom_integrante; // echo out the url description of a post >	
-							  }  
-							 
-							?>	
+							
 							<br />
-							<?php  $custom_repeatables = get_post_meta($post->ID, 'custom_repeatable', true);
-							foreach ($custom_repeatables as $key => $custom_repeatable) {
-							  	echo $custom_repeatable; // echo out the url description of a post >	
-							  }  
-							 
-							?>	
 							
 							
-						</div>
+						</article>
 
 
 

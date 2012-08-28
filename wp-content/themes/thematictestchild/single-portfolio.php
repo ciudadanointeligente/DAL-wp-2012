@@ -86,11 +86,13 @@
 										</span>
 									</li>
 									<li><strong>Integrantes:</strong>
-										<ul>
+										<ul> 
 											<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
+											if (is_null($custom_integrantes )){
 												foreach ($custom_integrantes as $key => $custom_integrante) {
 												  	echo '<li>'.$custom_integrante.'</li>'; // echo out the url description of a post >	
 												}  
+											}
 									 		?>	
 										</ul>
 									</li>
@@ -116,12 +118,13 @@
 								echo $post_meta_data[custom_screencast][0];  
 								echo '<h3> Datos Utilizados</h3><ul class="databaseList">';
 
-									$custom_databases = get_post_meta($post->ID, 'custom_database', true);
-									
+								$custom_databases = get_post_meta($post->ID, 'custom_database', true);
+								if (is_null($custom_databases )){
 									foreach ($custom_databases as $key => $custom_database) {
 										
 										 echo '<li><a href="http://'. $custom_database .'">'. $custom_database .'</a></li>'; 
 									}  
+								}
 							
 								echo '</ul>';
 

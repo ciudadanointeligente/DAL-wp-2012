@@ -31,8 +31,23 @@ jQuery(function(jQuery) {
 	
 	jQuery('.repeatable-add').click(function() {
 		field = jQuery(this).closest('td').find('.custom_repeatable li:last').clone(true);
+		console.log (field);
 		fieldLocation = jQuery(this).closest('td').find('.custom_repeatable li:last');
 		jQuery('input', field).val('').attr('name', function(index, name) {
+			return name.replace(/(\d+)/, function(fullMatch, n) {
+				return Number(n) + 1;
+			});
+		})
+		field.insertAfter(fieldLocation, jQuery(this).closest('td'))
+		return false;
+	});
+//-------------
+	jQuery('.repeatableimage-add').click(function() {
+		field = jQuery(this).closest('td').find('.custom_repeatable li:last').clone(true);
+		fieldLocation = jQuery(this).closest('td').find('.custom_repeatable li:last');
+		jQuery('img', field).attr('src', '');
+		jQuery("input:not([type='button'])", field).val('').attr('name', function(index, name) {
+			console.log (name);
 			return name.replace(/(\d+)/, function(fullMatch, n) {
 				return Number(n) + 1;
 			});

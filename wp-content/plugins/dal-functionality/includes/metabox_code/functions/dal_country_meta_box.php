@@ -1,283 +1,66 @@
 <?
 
 // Add the Meta Box
-function add_custom_meta_box() {
+function add_country_meta_box() {
     add_meta_box(
-		'app_meta_box', // $id
-		'App Info', // $title 
-		'show_app_meta_box', // $callback
-		'portfolio', // $page
+		'country_meta_box', // $id
+		'Country Info', // $title 
+		'show_country_meta_box', // $callback
+		'dal_country', // $page
 		'normal', // $context
 		'high'); // $priority
 }
-add_action('add_meta_boxes', 'add_custom_meta_box');
+add_action('add_meta_boxes', 'add_country_meta_box');
 
-// Field Array
-$prefix = 'custom_';
-$custom_meta_fields = array(
+$prefix = 'country_';
+$country_meta_fields = array(
+	
 	array(
-		'label'	=> 'Año',
-		'desc'	=> '',
-		'id'	=> $prefix.'ano',
-		'type'	=> 'select',
-		'options' => array (
-			'one' => array (
-				'label' => '2012',
-				'value'	=> '2012'
-				
-			),
-			'two' => array (
-				'label' => '2011',
-				'value'	=> '2011'
-				
-			),
-			'three' => array (
-				'label' => '2013',
-				'value'	=> '2013'
-			)
-		)
+		'label'	=> 'Inscipciones',
+		'desc'	=> 'Url donde pueden inscribirse los participantes',
+		'id'	=> $prefix.'inscribete',
+		'type'	=> 'link'
+	),
+	
+	array(
+		'label'	=> 'Lugar del evento',
+		'desc'	=> 'Ciudades donde se realizará el evento. O dirección.',
+		'id'	=> $prefix.'venue',
+		'type'	=> 'repeatable'
+
 	),
 	array(
-		'label'	=> 'País',
-		'id'	=> 'apppais',
-		'type'	=> 'tax_select'
+		'label'	=> 'organizadores',
+		'desc'	=> 'Agrega el logo de los organizadores locales',
+		'id'	=> $prefix.'organizador',
+		'type'	=> 'repeatableimage'
+
+	),
+
+	array(
+		'label'	=> 'Bases de datos Disponibles en',
+		'desc'	=> 'URL de las bases de datos disponibles',
+		'id'	=> $prefix.'datasets',
+		'type'	=> 'repeatablelink'
 	),
 	array(
 		'label'	=> 'Track en que participa la app',
 		'id'	=> 'apps_tracks',
 		'type'	=> 'tax_select'
 	),
-
-	array(
-		'label'	=> 'Nombre del equipo',
-		'desc'	=> 'Nombre del equipo participante',
-		'id'	=> $prefix.'equipo',
-		'type'	=> 'text'
-	),
-
-	array(
-		'label'	=> 'Integrantes',
-		'desc'	=> 'Agrega los nombres de los integrantes del grupo',
-		'id'	=> $prefix.'integrante',
-		'type'	=> 'repeatable'
-
-	),
-	
-
-
-	array(
-		'label'	=> 'Datos Utilizados',
-		'desc'	=> 'Link de las bases de datos usadas en el desarrollo de la app',
-		'id'	=> $prefix.'database',
-		'type'	=> 'repeatablelink'
-	),
-
-	array(
-		'label'	=> 'Problema que soluciona',
-		'desc'	=> 'Describe la problemática que aborda tu aplicación, si te inspiraste en alguna idea surgida en los meetups por favor agrega el link.',
-		'id'	=> $prefix.'problema',
-		'type'	=> 'textarea'
-	),
-
-	array(
-		'label'	=> 'Solución planteada',
-		'desc'	=> 'Cómo tu aplicación soluciona este problema',
-		'id'	=> $prefix.'solucion',
-		'type'	=> 'textarea'
-	),
-
-	array(
-		'label'	=> 'Link a la aplicación',
-		'desc'	=> 'URL de la app',
-		'id'	=> $prefix.'urlapp',
-		'type'	=> 'link'
-	),
-	array(
-		'label'	=> 'Screencast',
-		'desc'	=> 'Embed code del screencast',
-		'id'	=> $prefix.'screencast',
-		'type'	=> 'textarea'
-	),
-
-	array(
-		'label'	=> 'Github',
-		'desc'	=> 'Link al proyecto en github',
-		'id'	=> $prefix.'github',
-		'type'	=> 'link'
-	),
-/*
-	array(
-		'label'	=> 'Textarea',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'textarea',
-		'type'	=> 'textarea'
-	)
-	
-	array(
-		'label'	=> 'Text Input',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'text',
-		'type'	=> 'text'
-	),
-	array(
-		'label'	=> 'Checkbox Input',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'checkbox',
-		'type'	=> 'checkbox'
-	),
-	array(
-		'label'	=> 'Select Box',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'select',
-		'type'	=> 'select',
-		'options' => array (
-			'one' => array (
-				'label' => 'Option One',
-				'value'	=> 'one'
-			),
-			'two' => array (
-				'label' => 'Option Two',
-				'value'	=> 'two'
-			),
-			'three' => array (
-				'label' => 'Option Three',
-				'value'	=> 'three'
-			)
-		)
-	),
-	array (
-		'label'	=> 'Radio Group',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'radio',
-		'type'	=> 'radio',
-		'options' => array (
-			'one' => array (
-				'label' => 'Option One',
-				'value'	=> 'one'
-			),
-			'two' => array (
-				'label' => 'Option Two',
-				'value'	=> 'two'
-			),
-			'three' => array (
-				'label' => 'Option Three',
-				'value'	=> 'three'
-			)
-		)
-	),
-	array(
-		'label'	=> 'apppais',
-		'id'	=> 'apppais',
-		'type'	=> 'tax_select'
-	),
-	array (
-		'label'	=> 'Checkbox Group',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'checkbox_group',
-		'type'	=> 'checkbox_group',
-		'options' => array (
-			'one' => array (
-				'label' => 'Option One',
-				'value'	=> 'one'
-			),
-			'two' => array (
-				'label' => 'Option Two',
-				'value'	=> 'two'
-			),
-			'three' => array (
-				'label' => 'Option Three',
-				'value'	=> 'three'
-			)
-		)
-	),
-	
-	array(
-		'label'	=> 'Post List',
-		'desc'	=> 'A description for the field.',
-		'id'	=>  $prefix.'post_id',
-		'type'	=> 'post_list',
-		'post_type' => array('post','page')
-	),
-	array(
-		'label'	=> 'Date',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'date',
-		'type'	=> 'date'
-	),
-	array(
-		'label'	=> 'Slider',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'slider',
-		'type'	=> 'slider',
-		'min'	=> '0',
-		'max'	=> '100',
-		'step'	=> '5'
-	),*/
-	array(
-		'label'	=> 'Image',
-		'desc'	=> 'A description for the field.',
-		'id'	=> $prefix.'image',
-		'type'	=> 'image'
-	),
-	
 );
 
-// enqueue scripts and styles, but only if is_admin
-
-if(is_admin()) {
-	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_script('jquery-ui-slider');
-	wp_enqueue_script('custom-js', get_bloginfo('wpurl').'/wp-content/plugins/dal-functionality/includes/metabox_code/js/custom-js.js');
-	wp_enqueue_style('jquery-ui-custom',get_bloginfo('wpurl').'/wp-content/plugins/dal-functionality/includes/metabox_code/css/jquery-ui-custom.css');
-}
-
-// add some custom js to the head of the page
-add_action('admin_head','add_custom_scripts');
-function add_custom_scripts() {
-	global $custom_meta_fields, $post;
-	
-	$output = '<script type="text/javascript">
-				jQuery(function() {';
-	
-	foreach ($custom_meta_fields as $field) { // loop through the fields looking for certain types
-		// date
-		if($field['type'] == 'date')
-			$output .= 'jQuery(".datepicker").datepicker();';
-		// slider
-		if ($field['type'] == 'slider') {
-			$value = get_post_meta($post->ID, $field['id'], true);
-			if ($value == '') $value = $field['min'];
-			$output .= '
-					jQuery( "#'.$field['id'].'-slider" ).slider({
-						value: '.$value.',
-						min: '.$field['min'].',
-						max: '.$field['max'].',
-						step: '.$field['step'].',
-						slide: function( event, ui ) {
-							jQuery( "#'.$field['id'].'" ).val( ui.value );
-						}
-					});';
-		}
-	}
-	
-	$output .= '});
-		</script>';
-		
-	echo $output;
-}
-
 // The Callback
-function show_app_meta_box() {
-	global $custom_meta_fields, $post;
+function show_country_meta_box() {
+	global $country_meta_fields, $post;
 	// Use nonce for verification
-	echo '<input type="hidden" name="custom_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
+	echo '<input type="hidden" name="country_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
 	
 	// Begin the field table and loop
 	echo '<table class="form-table">';
-	foreach ($custom_meta_fields as $field) {
+	foreach ($country_meta_fields as $field) {
 		// get value of this field if it exists for this post
 		$meta = get_post_meta($post->ID, $field['id'], true);
-
 		// begin a table row with
 		echo '<tr>
 				<th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
@@ -368,8 +151,8 @@ function show_app_meta_box() {
 								<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$value.'" size="5" />
 								<br /><span class="description">'.$field['desc'].'</span>';
 					break;
-					
-					//image
+
+					// image
 					case 'image':
 						$image = get_template_directory_uri().'/images/image.png';	
 						echo '<span class="custom_default_image" style="display:none">'.$image.'</span>';
@@ -379,6 +162,40 @@ function show_app_meta_box() {
 										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
 										<small>&nbsp;<a href="#" class="custom_clear_image_button">Remove Image</a></small>
 										<br clear="all" /><span class="description">'.$field['desc'].'</span>';
+					break;
+
+					// repeatableimage
+					case 'repeatableimage':
+						echo '<a class="repeatableimage-add button" href="#">+</a>
+								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
+						$i = 0;
+						print_r($meta);
+						if ($meta) {
+							foreach($meta as $row) { 
+								$imagerep = wp_get_attachment_image_src($row, 'medium');
+								 $imagerep = $imagerep[0];
+								echo '<li>
+										<input name="'.$field['id'].'['.$i.']" type="hidden"  class="custom_upload_image" value="'.$row.'" />
+										<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
+										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
+										<br clear="all" /><span class="description">'.$field['desc'].'</span>
+										<a class="repeatable-remove button" href="#">-</a>
+									</li>';
+								$i++;
+							}
+						} else {
+							echo '<li>';
+							$imagerep = get_template_directory_uri().'/images/image.png';	
+							echo '<span class="custom_default_image" style="display:none">'.$imagerep.'</span>';
+							if ($meta) { $imagerep = wp_get_attachment_image_src($meta, 'medium');	$imagerep = $imagerep[0]; }				
+							echo '<input name="'.$field['id'].'['.$i.']" type="hidden" class="custom_upload_image" value="'.$meta.'" />
+									<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
+										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
+										<br clear="all" /><span class="description">'.$field['desc'].'</span>';
+							echo '</li>';
+						}
+						echo '</ul>';
+						
 					break;
 
 					// repeatable
@@ -402,6 +219,7 @@ function show_app_meta_box() {
 							<span class="description">'.$field['desc'].'</span>';
 					break;
 
+
 					// repeatable link
 					case 'repeatablelink':
 						echo '<a class="repeatable-add button" href="#">+</a>
@@ -422,8 +240,6 @@ function show_app_meta_box() {
 						echo '</ul>
 							<span class="description">'.$field['desc'].'</span>';
 					break;
-					//
-					
 				} //end switch
 		echo '</td></tr>';
 	} // end foreach
@@ -436,11 +252,11 @@ function show_app_meta_box() {
 add_action( 'admin_menu' , 'remove_taxonomy_boxes' );*/
 
 // Save the Data
-function save_custom_meta($post_id) {
-    global $custom_meta_fields;
+function save_country_meta($post_id) {
+    global $country_meta_fields;
 	
 	// verify nonce
-	if (!wp_verify_nonce($_POST['custom_meta_box_nonce'], basename(__FILE__))) 
+	if (!wp_verify_nonce($_POST['country_meta_box_nonce'], basename(__FILE__))) 
 		return $post_id;
 	// check autosave
 	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
@@ -454,7 +270,7 @@ function save_custom_meta($post_id) {
 	}
 	
 	// loop through fields and save the data
-	foreach ($custom_meta_fields as $field) {
+	foreach ($country_meta_fields as $field) {
 		if($field['type'] == 'tax_select') continue;
 		$old = get_post_meta($post_id, $field['id'], true);
 		$new = $_POST[$field['id']];
@@ -469,7 +285,12 @@ function save_custom_meta($post_id) {
 	$post = get_post($post_id);
 	$category = $_POST['category'];
 	wp_set_object_terms( $post_id, $category, 'category' );
+	
 }
-add_action('save_post', 'save_custom_meta');
+add_action('save_post', 'save_country_meta');
+
+//////
+
+
 
 ?>

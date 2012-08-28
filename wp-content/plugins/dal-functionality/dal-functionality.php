@@ -18,7 +18,7 @@ add_action( 'init', 'create_pais_taxonomy', 0 );
  
 function create_pais_taxonomy() {
 	if (!taxonomy_exists('pais')) {
-		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'post' ), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
+		register_taxonomy( 'pais', array( 'page','dal_country_sponsor', 'post', 'dal_country'), array( 'hierarchical' => false, 'label' => __('Pais'), 'query_var' => 'pais', 'rewrite' => array( 'slug' => 'pais' ) ) );
  
 		  wp_insert_term('Argentina', 'pais');
       wp_insert_term('Bolivia', 'pais');
@@ -44,15 +44,16 @@ function create_pais_taxonomy() {
 }
 
 
- 
-
- function add_pais_box() {
+function add_pais_box() {
  	remove_meta_box('tagsdiv-pais', 'page','core');
   remove_meta_box('tagsdiv-pais', 'post','core');
   remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
-	add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','page', 'side', 'core');
-  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','post', 'side', 'core');
-  add_meta_box('pais_box_ID', __('Pais'), 'your_styling_function','dal_country_sponsor', 'side', 'core');
+  remove_meta_box('tagsdiv-pais', 'dal_country','core');
+	add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','page', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','post', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country_sponsor', 'side', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country', 'advanced', 'high');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country', 'advanced', 'high');
 }	
  
 function add_pais_menus() {
@@ -69,7 +70,7 @@ function add_pais_menus() {
 add_pais_menus();
 
 // This function gets called in edit-form-advanced.php
-function your_styling_function($post) {
+function select_dal_country($post) {
  
 	echo '<input type="hidden" name="taxonomy_noncename" id="taxonomy_noncename" value="' . 
     		wp_create_nonce( 'taxonomy_pais' ) . '" />';
@@ -123,7 +124,7 @@ function save_taxonomy_data($post_id) {
  
   	// OK, we're authenticated: we need to find and save the data
 	$post = get_post($post_id);
-	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio')){ 
+	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio') || ($post->post_type == 'dal_country')){ 
            // OR $post->post_type != 'revision'
            $pais = $_POST['post_pais'];
 	   wp_set_object_terms( $post_id, $pais, 'pais' );
@@ -165,6 +166,29 @@ add_action('thematic_abovemainasides', 'my_above_asides');
 
 add_action( 'init', 'create_dal_post_type' );
 function create_dal_post_type() {
+  register_post_type( 'dal_country',
+    array(
+      'labels' => array(
+        'name' => __( 'Paises en competencia' ),
+        'singular_name' => __( 'País en competencia' ),
+        'add_new' => _x('Add New', 'País'),
+        'add_new_item' => __('Add New País en competencia'),
+        'edit_item' => __('Edit País en competencia'),
+        'new_item' => __('New País en competencia'),
+        'all_items' => __('All País en competencia'),
+        'view_item' => __('View País en competencia'),
+        'search_items' => __('Search País en competencia'),
+        'not_found' =>  __('No País en competencia found'),
+        'not_found_in_trash' => __('No País en competencia found in Trash'), 
+        'parent_item_colon' => '',
+        'menu_name' => __('País en competencia')
+      ),
+    'public' => true,
+    'has_archive' => false,
+    'supports' => array( 'title')
+
+    )
+  );
   register_post_type( 'dal_country_sponsor',
     array(
       'labels' => array(
@@ -296,7 +320,7 @@ function save_apppais_data($post_id) {
  
     // OK, we're authenticated: we need to find and save the data
   $post = get_post($post_id);
-  if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio')){ 
+  if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio') || ($post->post_type == 'dal_country')){ 
            // OR $post->post_type != 'revision'
            $apppais = $_POST['post_apppais'];
      wp_set_object_terms( $post_id, $apppais, 'apppais' );
@@ -307,10 +331,16 @@ function save_apppais_data($post_id) {
 
 
 //
-//=========== 5- Include reusable metaboxes 
+//=========== 5- Include reusable metaboxes for apps
 
 
 require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/add_meta_box.php' );
+
+//
+//=========== 6- Include reusable metaboxes for dal_countries
+
+
+require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/dal_country_meta_box.php' );
 
 
 

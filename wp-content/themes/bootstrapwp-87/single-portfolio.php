@@ -35,47 +35,51 @@ get_header(); ?>
 
              <!--the custom portfolio content-->
 
-           		 <article class="">
-						<section class="infoApp well">
-							<div class="theThumbail">
-								<?php the_post_thumbnail( $size, $attr ); ?> 
-							</div>	
-							<div class="detailsApp" > 
-								<ul id="infoAppUl">
-									<li> 
-										<strong>Equipo:</strong><span><?php echo $post_meta_data[custom_equipo][0]; ?></span>
-									</li>
-									<li> 
-										<strong>País:</strong><span><?php echo $post_meta_data[custom_apppais][0]; ?></span>
-									</li>
-									<li> 
-										<strong>Tema:</strong><span><?php echo $post_meta_data[custom_apps_tracks][0]; ?></span>
-									</li>
-									<li> 
-										<strong>Github:</strong>
-										<span>
-											<?php echo'<a href="'.$post_meta_data[custom_github][0].'">'.$post_meta_data[custom_github][0].'</a>'; ?>
-										</span>
-									</li>
-									<li><strong>Integrantes:</strong>
-										<ul> 
-											<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
-											if (!empty($custom_integrantes)){
-												foreach ($custom_integrantes as $key => $custom_integrante) {
-												  	echo '<li>'.$custom_integrante.'</li>'; // echo out the member	
-												}  
-											}
-									 		?>	
-										</ul>
-									</li>
-								</ul>	
-							</div>
+           		 <article>
+						<section class="infoApp" >
+							<div class="row">
+								<div class="theThumbail span4">
+									<?php the_post_thumbnail( $size, $attr ); ?> 
+								</div>	
+							
+								<div class="span3 well" > 
+									<ul id="infoAppUl">
+										<li> 
+											<strong>Equipo:</strong><span><?php echo $post_meta_data[custom_equipo][0]; ?></span>
+										</li>
+										<li> 
+											<strong>País:</strong><span><?php echo $post_meta_data[custom_apppais][0]; ?></span>
+										</li>
+										<li> 
+											<strong>Tema:</strong><span><?php echo $post_meta_data[custom_apps_tracks][0]; ?></span>
+										</li>
+										<li> 
+											<strong>Github:</strong>
+											<span>
+												<?php echo'<a href="'.$post_meta_data[custom_github][0].'">'.$post_meta_data[custom_github][0].'</a>'; ?>
+											</span>
+										</li>
+										<li><strong>Integrantes:</strong>
+											<ul> 
+												<?php  $custom_integrantes = get_post_meta($post->ID, 'custom_integrante', true);
+												if (!empty($custom_integrantes)){
+													foreach ($custom_integrantes as $key => $custom_integrante) {
+													  	echo '<li>'.$custom_integrante.'</li>'; // echo out the member	
+													}  
+												}
+										 		?>	
+											</ul>
+										</li>
+									</ul>	
+								</div><!--/details-->
+							
 
-							<div class="well">
+								
 
-							<?php 
-								echo'<a class= "btn .btn-large btn-primary" href="'.$post_meta_data[custom_urlapp][0].'">Ver la app <br /><small>'.$post_meta_data[custom_urlapp][0].'</small></a>';?>
-							</div>
+								<?php 
+									echo'<a class= "btn btn-large btn-primary span3" href="'.$post_meta_data[custom_urlapp][0].'">Ver la app <br /><small>'.$post_meta_data[custom_urlapp][0].'</small></a>';?>
+								
+							</div><!--/row-->
 			
 						</section>
 						<section class="descApp">
@@ -89,7 +93,8 @@ get_header(); ?>
 								echo apply_filters('the_content', $post_meta_data[custom_solucion][0]);  
 								echo '<h3>Screencast</h3>';
 								echo $post_meta_data[custom_screencast][0];  
-								echo '<h3> Datos Utilizados</h3><ul class="databaseList">';
+
+								echo '<div class="well"><h3> Datos Utilizados</h3><ul class="databaseList">';
 
 								$custom_databases = get_post_meta($post->ID, 'custom_database', true);
 								if (!empty($custom_databases )){
@@ -99,7 +104,7 @@ get_header(); ?>
 									}  
 								}
 							
-								echo '</ul>';
+								echo '</ul></div>';
 
 							?>
 						</section>

@@ -15,7 +15,7 @@
     $organizers_fields = array(
          'id' => 'Organizers',
          'title' => 'Organizers',
-         'page' => 'dal_country',
+         'page' => 'portfolio',
          'context' => 'normal',
          'priority' => 'high',
          'fields' => array(
@@ -78,7 +78,7 @@
 
                     $singleorg = '<p>Org Name<input type="text" name="orgs[%1$s][title]" value="%2$s" />';
                     $singleorg .= ' -- link organizer : <input type="text" name="orgs[%1$s][orglink]" value="%3$s" />';
-                    $image = get_template_directory_uri().'/images/image.png';  
+                    $image = get_template_directory_uri().'/img/image.png';  
                     $singleorg .= '<span class="custom_default_image" style="display:none">'.$image.'</span>';
                     if ($org['orglogo']) { $image = wp_get_attachment_image_src($org['orglogo'], 'medium'); $image = $image[0]; }    
 

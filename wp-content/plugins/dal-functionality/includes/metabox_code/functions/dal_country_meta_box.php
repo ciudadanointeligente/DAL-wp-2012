@@ -26,14 +26,8 @@ $country_meta_fields = array(
 		'label'	=> 'Lugar del evento',
 		'desc'	=> 'Ciudades donde se realizará el evento. O dirección.',
 		'id'	=> $prefix.'venue',
-		'type'	=> 'repeatable'
-
-	),
-	array(
-		'label'	=> 'organizadores',
-		'desc'	=> 'Agrega el logo de los organizadores locales',
-		'id'	=> $prefix.'organizador',
-		'type'	=> 'repeatableimage'
+		'type'	=> 'repeatable',
+		'call'  => 'Agregar otro',
 
 	),
 
@@ -41,12 +35,21 @@ $country_meta_fields = array(
 		'label'	=> 'Bases de datos Disponibles en',
 		'desc'	=> 'URL de las bases de datos disponibles',
 		'id'	=> $prefix.'datasets',
-		'type'	=> 'repeatablelink'
+		'type'	=> 'link'
 	),
 	array(
 		'label'	=> 'Track en que participa la app',
 		'id'	=> 'apps_tracks',
 		'type'	=> 'tax_select'
+	),
+
+	array(
+		'label'	=> 'organizadores',
+		'desc'	=> 'Agrega el logo de los organizadores locales, puedes incluir el link de tu organización en la misma imagen.',
+		'id'	=> $prefix.'organizador',
+		'call'  => 'Agregar otro organizador',
+		'type'	=> 'repeatableimage'
+
 	),
 );
 
@@ -74,6 +77,10 @@ function show_country_meta_box() {
 					//link
 					// text
 					case 'link':
+						if ( !preg_match( "/http(s?):\/\//", $meta )) {
+						    $errors = 'Url not valid';
+						    $meta = 'http://';
+						  } 
 						echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30"  placeholder="http://url.com"/>
 								<br /><span class="description">'.$field['desc'].'</span>';
 					break;
@@ -154,22 +161,21 @@ function show_country_meta_box() {
 
 					// image
 					case 'image':
-						$image = get_template_directory_uri().'/images/image.png';	
+						$image = get_template_directory_uri().'/img/image.png';	
 						echo '<span class="custom_default_image" style="display:none">'.$image.'</span>';
 						if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium');	$image = $image[0]; }				
 						echo	'<input name="'.$field['id'].'" type="hidden" class="custom_upload_image" value="'.$meta.'" />
 									<img src="'.$image.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
+										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />
 										<small>&nbsp;<a href="#" class="custom_clear_image_button">Remove Image</a></small>
 										<br clear="all" /><span class="description">'.$field['desc'].'</span>';
 					break;
 
 					// repeatableimage
 					case 'repeatableimage':
-						echo '<a class="repeatableimage-add button" href="#">+</a>
+						echo '<br clear="all" /><span class="description">'.$field['desc'].'</span>
 								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
 						$i = 0;
-						print_r($meta);
 						if ($meta) {
 							foreach($meta as $row) { 
 								$imagerep = wp_get_attachment_image_src($row, 'medium');
@@ -177,31 +183,29 @@ function show_country_meta_box() {
 								echo '<li>
 										<input name="'.$field['id'].'['.$i.']" type="hidden"  class="custom_upload_image" value="'.$row.'" />
 										<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
-										<br clear="all" /><span class="description">'.$field['desc'].'</span>
+										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />
+										
 										<a class="repeatable-remove button" href="#">-</a>
 									</li>';
 								$i++;
 							}
 						} else {
 							echo '<li>';
-							$imagerep = get_template_directory_uri().'/images/image.png';	
+							$imagerep = get_template_directory_uri().'/img/image.png';	
 							echo '<span class="custom_default_image" style="display:none">'.$imagerep.'</span>';
 							if ($meta) { $imagerep = wp_get_attachment_image_src($meta, 'medium');	$imagerep = $imagerep[0]; }				
 							echo '<input name="'.$field['id'].'['.$i.']" type="hidden" class="custom_upload_image" value="'.$meta.'" />
 									<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Choose Image" />
-										<br clear="all" /><span class="description">'.$field['desc'].'</span>';
+										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />';
 							echo '</li>';
 						}
-						echo '</ul>';
+						echo '<a class="repeatableimage-add button-primary" href="#">+'.$field['call'].'</a></ul>';
 						
 					break;
 
 					// repeatable
 					case 'repeatable':
-						echo '<a class="repeatable-add button" href="#">+</a>
-								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
+						echo '<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
 						$i = 0;
 						if ($meta) {
 							foreach($meta as $row) {
@@ -215,18 +219,23 @@ function show_country_meta_box() {
 										<input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="" size="30" />
 										<a class="repeatable-remove button" href="#">-</a></li>';
 						}
-						echo '</ul>
+						echo '<a class="repeatable-add button-primary" href="#">+ '.$field['call'].'</a></ul>
 							<span class="description">'.$field['desc'].'</span>';
 					break;
 
 
 					// repeatable link
 					case 'repeatablelink':
-						echo '<a class="repeatable-add button" href="#">+</a>
+						
+						echo '<a class="repeatable-add button-primary" href="#">+</a>
 								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
 						$i = 0;
 						if ($meta) {
 							foreach($meta as $row) {
+								if ( !preg_match( "/http(s?):\/\//", $row )) {
+							    $errors = 'Url not valid';
+							    $row = 'http://';
+							  } 
 								echo '<li><span class="sort hndle">|||</span>
 											<input type="url" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="'.$row.'" size="30"  placeholder="http://url.com" />
 											<a class="repeatable-remove button" href="#">-</a></li>';
@@ -234,7 +243,7 @@ function show_country_meta_box() {
 							}
 						} else {
 							echo '<li><span class="sort hndle">|||</span>
-										<input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="" size="30" />
+										<input type="url" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="" size="30" placeholder="http://url.com" />
 										<a class="repeatable-remove button" href="#">-</a></li>';
 						}
 						echo '</ul>

@@ -1,19 +1,16 @@
- <?php /*---------------------------*/
-    /* Define Metabox Fields
-    /*---------------------------*/
-
+<?php 
     $prefix = 'tz_';
 
     $organizers_fields = array(
          'id' => 'Organizers',
-         'title' => __('Organizers'),
+         'title' => 'Organizers',
          'page' => 'dal_country',
          'context' => 'normal',
          'priority' => 'high',
          'fields' => array(
             array(
-                'name' => __('Add ', 'framework'),
-                'desc' => __('This meta box is under development', 'framework'),
+                'name' => 'Add ',
+                'desc' => 'This meta box is under development',
                 'id' => $prefix . 'organizers',
                 'type' => 'text',
                 'std' => ''
@@ -63,7 +60,7 @@
         if ( count( $orgs ) > 0 ) {
             foreach ( (array)$orgs as $orglink ) {
                 if ( isset( $orglink['title'] ) || isset( $orglink['orglink'] ) ) {
-                    printf( '<p>Song Title <input type="text" name="orgs[%1$s][title]" value="%2$s" /> -- orglink number : <input type="text" name="orgs[%1$s][orglink]" value="%3$s" /><span class="remove">%4$s</span></p>', $c, $orglink['title'], $orglink['orglink'], __( 'Remove orglink' ) );
+                    printf( '<p>Org Name<input type="text" name="orgs[%1$s][title]" value="%2$s" /> -- orglink number : <input type="text" name="orgs[%1$s][orglink]" value="%3$s" /><span class="remove">%4$s</span></p>', $c, $orglink['title'], $orglink['orglink'], __( 'Remove orglink' ) );
                     $c++;
                 }
             }

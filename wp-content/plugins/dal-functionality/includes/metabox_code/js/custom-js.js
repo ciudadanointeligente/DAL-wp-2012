@@ -1,3 +1,4 @@
+var imageLoader
 jQuery(function(jQuery) {
 	
 	
@@ -6,8 +7,7 @@ jQuery(function(jQuery) {
 				jQuery(this).attr('value','Use This Image');
 		});
 	});
-	
-	jQuery('.custom_upload_image_button').click(function() {
+	function imageLoader(){
 		formfield = jQuery(this).siblings('.custom_upload_image');
 		preview = jQuery(this).siblings('.custom_preview_image');
 		tb_show('', 'media-upload.php?type=image&TB_iframe=true');
@@ -20,7 +20,9 @@ jQuery(function(jQuery) {
 			tb_remove();
 		}
 		return false;
-	});
+	};
+
+	jQuery('.custom_upload_image_button').click(imageLoader);
 	
 	jQuery('.custom_clear_image_button').click(function() {
 		var defaultImage = jQuery(this).parent().siblings('.custom_default_image').text();

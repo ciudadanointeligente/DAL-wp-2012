@@ -1,6 +1,17 @@
 <?php 
     $prefix = 'tz_';
 
+    if(is_admin()) {
+        wp_enqueue_script('custom-js', get_bloginfo('wpurl').'/wp-content/plugins/dal-functionality/includes/metabox_code/js/custom-js.js');
+        wp_enqueue_style('jquery-ui-custom',get_bloginfo('wpurl').'/wp-content/plugins/dal-functionality/includes/metabox_code/css/jquery-ui-custom.css');
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('thickbox');
+        wp_enqueue_script('jquery-ui-datepicker');
+        wp_enqueue_script('jquery-ui-slider');
+        wp_enqueue_style('thickbox');
+    }
+
+
     $organizers_fields = array(
          'id' => 'Organizers',
          'title' => 'Organizers',
@@ -14,7 +25,13 @@
                 'id' => $prefix . 'organizers',
                 'type' => 'text',
                 'std' => ''
-            ),                        
+            ),   
+            array(
+            'label' => 'Logo organizer',
+            'desc'  => 'Agrega el logo de los organizadores locales',
+            'id'    => $prefix.'orglogo',
+            'type'  => 'image'
+            ),                     
         )
     );
 
@@ -44,29 +61,44 @@
         global $organizers_fields, $post;
         // Use nonce for verification
         echo '<input type="hidden" name="tz_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
-
-
         ?>
-
 
 
 
         <div id="meta_inner">
         <?php
-
-        //get the saved meta as an arry
+        //get the saved meta as an array
+       
         $orgs = get_post_meta( $post->ID, 'orgs', true );
         $c = 0;
         if ( count( $orgs ) > 0 ) {
-            foreach ( (array)$orgs as $orglink ) {
-                if ( isset( $orglink['title'] ) || isset( $orglink['orglink'] ) ) {
-                    printf( '<p>Org Name<input type="text" name="orgs[%1$s][title]" value="%2$s" /> -- orglink number : <input type="text" name="orgs[%1$s][orglink]" value="%3$s" /><span class="remove">%4$s</span></p>', $c, $orglink['title'], $orglink['orglink'], __( 'Remove orglink' ) );
+            foreach ( (array)$orgs as $org ) {
+                print_r($org);
+                if ( isset( $org['title'] ) || isset( $org['orglink'] ) || isset( $org['orglogo'] ) ) {
+
+                    $singleorg = '<p>Org Name<input type="text" name="orgs[%1$s][title]" value="%2$s" />';
+                    $singleorg .= ' -- link organizer : <input type="text" name="orgs[%1$s][orglink]" value="%3$s" />';
+                    $image = get_template_directory_uri().'/images/image.png';  
+                    $singleorg .= '<span class="custom_default_image" style="display:none">'.$image.'</span>';
+                    if ($org['orglogo']) { $image = wp_get_attachment_image_src($org['orglogo'], 'medium'); $image = $image[0]; }    
+
+                    $singleorg .= '<input name="orgs[%1$s][orglogo]" type="hidden" class="custom_upload_image" value="%5$s" />
+                                    <img src="'.$image.'" class="custom_preview_image" alt="" />
+                                    <br />
+                                    <input class="custom_upload_image_button button" type="button" value="Choose Image" />
+                                    <small>&nbsp;<a href="#" class="custom_clear_image_button">Remove Image</a></small>';
+                    $singleorg .='<br clear="all" /><span class="description">'.$org['desc'].'</span>';
+                    $singleorg .= '<span class="remove">%4$s</span></p>';
+                    printf( $singleorg, $c, $org['title'], $org['orglink'], __( 'Remove org' ), $org['orglogo'] );
                     $c++;
                 }
             }
         }
 
+
+
         ?>
+        <div class="custom_upload_image_button button"> hola</div>
         <span id="here"></span>
         <span class="add"><?php _e('Add organizer'); ?></span>
         <script>
@@ -75,8 +107,7 @@
         var count = <?php echo $c; ?>;
         $(".add").click(function() {
         count = count + 1;
-
-        $('#here').append('<p> Org Name <input type="text" name="orgs['+count+'][title]" value="" /> -- Link: <input type="url" name="orgs['+count+'][orglink]" value="" /><span class="remove">Remove organization link</span></p>' );
+        $('#here').before($('<p> Org Name <input type="text" name="orgs['+count+'][title]" value="" /> -- Link: <input type="url" name="orgs['+count+'][orglink]" value="" /> <span class="custom_default_image" style="display:none">--</span> <input name="orgs['+count+'][orglogo]" type="hidden" class="custom_upload_image" value=""/> <img src="" class="custom_preview_image" alt="" /><br /><input class="custom_upload_image_button button" type="button" onclick="imageLoader()" value="Choose Image"/><span class="remove">Remove organization link</span></p>'));
         return false;
         });
         $(".remove").live('click', function() {
@@ -116,7 +147,6 @@ function tz_save_data($post_id) {
 
  $orgs = $_POST['orgs'];
     update_post_meta($post_id,'orgs',$orgs);
-
 
 }
 

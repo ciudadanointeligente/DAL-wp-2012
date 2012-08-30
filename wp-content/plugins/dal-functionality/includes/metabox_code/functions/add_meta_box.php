@@ -371,7 +371,7 @@ function show_app_meta_box() {
 					
 					//image
 					case 'image':
-						$image = get_template_directory_uri().'/images/image.png';	
+						$image = get_template_directory_uri().'/img/image.png';	
 						echo '<span class="custom_default_image" style="display:none">'.$image.'</span>';
 						if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium');	$image = $image[0]; }				
 						echo	'<input name="'.$field['id'].'" type="hidden" class="custom_upload_image" value="'.$meta.'" />

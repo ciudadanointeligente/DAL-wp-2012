@@ -1,5 +1,5 @@
 <?
-
+// file to add meta box in apps view (portfolio)
 // Add the Meta Box
 function add_custom_meta_box() {
     add_meta_box(

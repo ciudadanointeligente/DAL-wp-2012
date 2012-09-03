@@ -1,4 +1,5 @@
 <div class ="sponsorFooter">
+	<ul>
 <?php
 $term = get_the_terms($post->ID, 'pais');
 //print_r($term);

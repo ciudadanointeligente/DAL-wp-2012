@@ -5,7 +5,7 @@
 $term = get_the_terms($post->ID, 'pais');
 //print_r($term);
 
-        query_posts( array( 'post_type' => 'dal_organizers', 'pais'=>$term[0]->name, 'paged' => get_query_var('taxonomy'), 'posts_per_page' => 30, 'orderby' => 'title', 'order' => 'DESC' ) ); ?>
+        query_posts( array( 'post_type' => 'dal_organizers', 'pais'=>array_pop($term)->name, 'paged' => get_query_var('taxonomy'), 'posts_per_page' => 30, 'orderby' => 'title', 'order' => 'DESC' ) ); ?>
        
 			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 

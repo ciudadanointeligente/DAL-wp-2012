@@ -1,9 +1,8 @@
 <?php
 /**
- * The template for displaying all pages.
  *
  * Template Name: Simple Page
- *
+ * 
  * Page template with minimal formatting, a fixed 940px container and right sidebar layout
  *
  * @package WordPress

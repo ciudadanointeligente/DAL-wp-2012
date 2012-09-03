@@ -116,24 +116,8 @@ get_header(); ?>
 							</ul>
 
 						</aside>
--------<br/>
-							
 
-							
-
-							
-							
-							<br />
-							
-							<br />
-							
-							
 						</article>
-
-
-        
-
-
 
 
             <?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>

@@ -131,15 +131,37 @@ class Arconix_Portfolio {
     if (!taxonomy_exists('feature')) {
     	register_taxonomy( 'feature', 'portfolio', $args );
         wp_insert_term('empty', 'feature');
-        }
+    };
 
     if (!taxonomy_exists('apps_tags')) {
+       
         register_taxonomy( 'apps_tags', 'portfolio', array( 'hierarchical' => false, 'label' => __('apps_tags'), 'query_var' => 'apps_tags', 'rewrite' => array( 'slug' => 'apps_tags' ) ) );
-        };
+    };
+
+    $labels = array(
+        'name' => _x( 'Tracks', 'taxonomy general name' ),
+        'singular_name' => _x( 'track', 'taxonomy singular name' ),
+        'search_items' =>  __( 'Search tracks' ),
+        'all_items' => __( 'All tracks' ),
+        'parent_item' => __( 'Parent track' ),
+        'parent_item_colon' => __( 'Parent track:' ),
+        'edit_item' => __( 'Edit track' ), 
+        'update_item' => __( 'Update track' ),
+        'add_new_item' => __( 'Add New track' ),
+        'new_item_name' => __( 'New track' ),
+        'menu_name' => __( 'Competition Tracks' ),
+      );    
 
     if (!taxonomy_exists('apps_tracks')) {
-        register_taxonomy( 'apps_tracks', 'portfolio', array( 'hierarchical' => True, 'label' => __('track'), 'query_var' => 'track', 'rewrite' => array( 'slug' => 'track' ) ) );
-        };
+
+        register_taxonomy('apps_tracks', array('portfolio', 'dal_country'), array(
+            'hierarchical' => True,
+            'labels' => $labels,
+            'show_ui' => true,
+            'query_var' => 'track', 
+            'rewrite' => array( 'slug' => 'track' ) )
+        );
+    };
 
      if (!taxonomy_exists('apppais')) {
         register_taxonomy( 'apppais', 'portfolio', array( 'hierarchical' => false, 'label' => __('país de la app'), 'query_var' => 'apppais', 'rewrite' => array( 'slug' => 'apppais' ) ) );

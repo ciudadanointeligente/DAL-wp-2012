@@ -26,9 +26,8 @@ $country_meta_fields = array(
 		'label'	=> 'Lugar del evento',
 		'desc'	=> 'Ciudades donde se realizará el evento. O dirección.',
 		'id'	=> $prefix.'venue',
-		'type'	=> 'repeatable',
 		'call'  => 'Agregar otro',
-
+		'type'	=> 'repeatable',
 	),
 
 	array(
@@ -37,20 +36,8 @@ $country_meta_fields = array(
 		'id'	=> $prefix.'datasets',
 		'type'	=> 'link'
 	),
-	array(
-		'label'	=> 'Track en que participa la app',
-		'id'	=> 'apps_tracks',
-		'type'	=> 'tax_select'
-	),
 
-	array(
-		'label'	=> 'organizadores',
-		'desc'	=> 'Agrega el logo de los organizadores locales, puedes incluir el link de tu organización en la misma imagen.',
-		'id'	=> $prefix.'organizador',
-		'call'  => 'Agregar otro organizador',
-		'type'	=> 'repeatableimage'
 
-	),
 );
 
 // The Callback
@@ -69,13 +56,8 @@ function show_country_meta_box() {
 				<th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
 				<td>';
 				switch($field['type']) {
-					// text
-					case 'text':
-						echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-					break;
+				
 					//link
-					// text
 					case 'link':
 						if ( !preg_match( "/http(s?):\/\//", $meta )) {
 						    $errors = 'Url not valid';
@@ -83,125 +65,6 @@ function show_country_meta_box() {
 						  } 
 						echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30"  placeholder="http://url.com"/>
 								<br /><span class="description">'.$field['desc'].'</span>';
-					break;
-					// textarea
-					case 'textarea':
-						echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea>
-								<br /><span class="description">'.$field['desc'].'</span>';
-					break;
-					// checkbox
-					case 'checkbox':
-						echo '<input type="checkbox" name="'.$field['id'].'" id="'.$field['id'].'" ',$meta ? ' checked="checked"' : '','/>
-								<label for="'.$field['id'].'">'.$field['desc'].'</label>';
-					break;
-					// select
-					case 'select':
-						echo '<select name="'.$field['id'].'" id="'.$field['id'].'">';
-						foreach ($field['options'] as $option) {
-							echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'.$option['value'].'">'.$option['label'].'</option>';
-						}
-						echo '</select><br /><span class="description">'.$field['desc'].'</span>';
-					break;
-					// radio
-					case 'radio':
-						foreach ( $field['options'] as $option ) {
-							echo '<input type="radio" name="'.$field['id'].'" id="'.$option['value'].'" value="'.$option['value'].'" ',$meta == $option['value'] ? ' checked="checked"' : '',' />
-									<label for="'.$option['value'].'">'.$option['label'].'</label><br />';
-						}
-						echo '<span class="description">'.$field['desc'].'</span>';
-					break;
-					// checkbox_group
-					case 'checkbox_group':
-						foreach ($field['options'] as $option) {
-							echo '<input type="checkbox" value="'.$option['value'].'" name="'.$field['id'].'[]" id="'.$option['value'].'"',$meta && in_array($option['value'], $meta) ? ' checked="checked"' : '',' /> 
-									<label for="'.$option['value'].'">'.$option['label'].'</label><br />';
-						}
-						echo '<span class="description">'.$field['desc'].'</span>';
-					break;
-					// tax_select
-					case 'tax_select':
-						echo '<select name="'.$field['id'].'" id="'.$field['id'].'">
-								<option value="">Select One</option>'; // Select One
-						$terms = get_terms($field['id'], 'get=all');
-						$selected = wp_get_object_terms($post->ID, $field['id']);
-						foreach ($terms as $term) {
-							if (!empty($selected) && !strcmp($term->slug, $selected[0]->slug)) 
-								echo '<option value="'.$term->slug.'" selected="selected">'.$term->name.'</option>'; 
-							else
-								echo '<option value="'.$term->slug.'">'.$term->name.'</option>'; 
-						}
-						$taxonomy = get_taxonomy($field['id']);
-						echo '</select><br /><span class="description"><a href="'.get_bloginfo('home').'/wp-admin/edit-tags.php?taxonomy='.$field['id'].'">Manage '.$taxonomy->label.'</a></span>';
-					break;
-					// post_list
-					case 'post_list':
-					$items = get_posts( array (
-						'post_type'	=> $field['post_type'],
-						'posts_per_page' => -1
-					));
-						echo '<select name="'.$field['id'].'" id="'.$field['id'].'">
-								<option value="">Select One</option>'; // Select One
-							foreach($items as $item) {
-								echo '<option value="'.$item->ID.'"',$meta == $item->ID ? ' selected="selected"' : '','>'.$item->post_type.': '.$item->post_title.'</option>';
-							} // end foreach
-						echo '</select><br /><span class="description">'.$field['desc'].'</span>';
-					break;
-					// date
-					case 'date':
-						echo '<input type="text" class="datepicker" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-					break;
-					// slider
-					case 'slider':
-					$value = $meta != '' ? $meta : '0';
-						echo '<div id="'.$field['id'].'-slider"></div>
-								<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$value.'" size="5" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-					break;
-
-					// image
-					case 'image':
-						$image = get_template_directory_uri().'/img/image.png';	
-						echo '<span class="custom_default_image" style="display:none">'.$image.'</span>';
-						if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium');	$image = $image[0]; }				
-						echo	'<input name="'.$field['id'].'" type="hidden" class="custom_upload_image" value="'.$meta.'" />
-									<img src="'.$image.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />
-										<small>&nbsp;<a href="#" class="custom_clear_image_button">Remove Image</a></small>
-										<br clear="all" /><span class="description">'.$field['desc'].'</span>';
-					break;
-
-					// repeatableimage
-					case 'repeatableimage':
-						echo '<br clear="all" /><span class="description">'.$field['desc'].'</span>
-								<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
-						$i = 0;
-						if ($meta) {
-							foreach($meta as $row) { 
-								$imagerep = wp_get_attachment_image_src($row, 'medium');
-								 $imagerep = $imagerep[0];
-								echo '<li>
-										<input name="'.$field['id'].'['.$i.']" type="hidden"  class="custom_upload_image" value="'.$row.'" />
-										<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />
-										
-										<a class="repeatable-remove button" href="#">-</a>
-									</li>';
-								$i++;
-							}
-						} else {
-							echo '<li>';
-							$imagerep = get_template_directory_uri().'/img/image.png';	
-							echo '<span class="custom_default_image" style="display:none">'.$imagerep.'</span>';
-							if ($meta) { $imagerep = wp_get_attachment_image_src($meta, 'medium');	$imagerep = $imagerep[0]; }				
-							echo '<input name="'.$field['id'].'['.$i.']" type="hidden" class="custom_upload_image" value="'.$meta.'" />
-									<img src="'.$imagerep.'" class="custom_preview_image" alt="" /><br />
-										<input class="custom_upload_image_button button" type="button" value="Elegir imagen" />';
-							echo '</li>';
-						}
-						echo '<a class="repeatableimage-add button-primary" href="#">+'.$field['call'].'</a></ul>';
-						
-					break;
 
 					// repeatable
 					case 'repeatable':
@@ -255,10 +118,6 @@ function show_country_meta_box() {
 	echo '</table>'; // end table
 }
 
-/*function remove_taxonomy_boxes() {
-	remove_meta_box('categorydiv', 'post', 'side');
-}
-add_action( 'admin_menu' , 'remove_taxonomy_boxes' );*/
 
 // Save the Data
 function save_country_meta($post_id) {
@@ -297,9 +156,5 @@ function save_country_meta($post_id) {
 	
 }
 add_action('save_post', 'save_country_meta');
-
-//////
-
-
 
 ?>

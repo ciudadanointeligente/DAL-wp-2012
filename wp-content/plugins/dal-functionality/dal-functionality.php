@@ -8,7 +8,7 @@ Author: Montserrat Lobos for Ciudadano Inteligente
 Author URI: http://ciudadanointeligente.org
 */
 
-
+ define( 'DAL_FUCT_URL', plugin_dir_url( __FILE__ ) );
 //
 // 1- Agrega taxonomía "paises" con dropdown para pages.
 //
@@ -48,12 +48,14 @@ function add_pais_box() {
  	remove_meta_box('tagsdiv-pais', 'page','core');
   remove_meta_box('tagsdiv-pais', 'post','core');
   remove_meta_box('tagsdiv-pais', 'dal_country_sponsor','core');
+  remove_meta_box('tagsdiv-pais', 'dal_organizers','core');
   remove_meta_box('tagsdiv-pais', 'dal_country','core');
-	add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','page', 'side', 'core');
-  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','post', 'side', 'core');
-  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country_sponsor', 'side', 'core');
+	add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','page', 'advanced', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','post', 'advanced', 'core');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country_sponsor', 'advanced', 'core');
   add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country', 'advanced', 'high');
-  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_country', 'advanced', 'high');
+  add_meta_box('pais_box_ID', __('Pais'), 'select_dal_country','dal_organizers', 'advanced', 'high');
+
 }	
  
 function add_pais_menus() {
@@ -124,7 +126,7 @@ function save_taxonomy_data($post_id) {
  
   	// OK, we're authenticated: we need to find and save the data
 	$post = get_post($post_id);
-	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio') || ($post->post_type == 'dal_country')){ 
+	if (($post->post_type == 'dal_country_sponsor') || ($post->post_type == 'page') || ($post->post_type == 'post') || ($post->post_type == 'portfolio') || ($post->post_type == 'dal_country') || ($post->post_type == 'dal_organizers')){ 
            // OR $post->post_type != 'revision'
            $pais = $_POST['post_pais'];
 	   wp_set_object_terms( $post_id, $pais, 'pais' );
@@ -161,7 +163,34 @@ add_action('thematic_abovemainasides', 'my_above_asides');
 //
 //========3-Let's create our "sponsors" CPT
 //
+add_action ('init', 'create_organizer_pt' );
 
+function create_organizer_pt(){
+   register_post_type( 'dal_organizers',
+    array(
+      'labels' => array(
+        'name' => __( 'Organizers' ),
+        'singular_name' => __( 'Organizer' ),
+        'add_new' => __('Add New Organizer'),
+        'add_new_item' => __('Add New Organizer'),
+        'edit_item' => __('Edit Organizer'),
+        'new_item' => __('New Organizer'),
+        'all_items' => __('All Organizers'),
+        'view_item' => __('View Organizer'),
+        'search_items' => __('Search Organizer'),
+        'not_found' =>  __('No Organizer País found'),
+        'not_found_in_trash' => __('No Organizer found in Trash'), 
+        'parent_item_colon' => '',
+        'menu_name' => __('Organizers')
+      ),
+    'public' => true,
+    'has_archive' => true,
+    'menu_position'=> 25,
+    'supports' => array( 'title')
+
+    )
+  );
+}
 
 
 add_action( 'init', 'create_dal_post_type' );
@@ -169,26 +198,30 @@ function create_dal_post_type() {
   register_post_type( 'dal_country',
     array(
       'labels' => array(
-        'name' => __( 'Paises en competencia' ),
-        'singular_name' => __( 'País en competencia' ),
-        'add_new' => _x('Add New', 'País'),
-        'add_new_item' => __('Add New País en competencia'),
-        'edit_item' => __('Edit País en competencia'),
-        'new_item' => __('New País en competencia'),
-        'all_items' => __('All País en competencia'),
-        'view_item' => __('View País en competencia'),
-        'search_items' => __('Search País en competencia'),
-        'not_found' =>  __('No País en competencia found'),
-        'not_found_in_trash' => __('No País en competencia found in Trash'), 
+        'name' => __( 'Ficha base Paises en competencia' ),
+        'singular_name' => __( 'Ficha base país en competencia' ),
+        'add_new' => _x('Add New Ficha país', 'Ficha País'),
+        'add_new_item' => __('Add New ficha País'),
+        'edit_item' => __('Edit Ficha País'),
+        'new_item' => __('New Ficha País'),
+        'all_items' => __('All Fichas País'),
+        'view_item' => __('View Ficha País'),
+        'search_items' => __('Search Ficha País'),
+        'not_found' =>  __('No Ficha País found'),
+        'not_found_in_trash' => __('No Ficha País found in Trash'), 
         'parent_item_colon' => '',
-        'menu_name' => __('País en competencia')
+        'menu_name' => __('Ficha base País'),
       ),
     'public' => true,
-    'has_archive' => false,
-    'supports' => array( 'title')
+    'has_archive' => true,
+    'supports' => array( 'title'),
+    'show_in_menu'=> true,
+    'menu_position'=> 19,
+    'menu_icon'=> DAL_FUCT_URL.'includes/images/flag.png',
 
     )
   );
+   
   register_post_type( 'dal_country_sponsor',
     array(
       'labels' => array(
@@ -230,7 +263,7 @@ function create_dal_post_type() {
       ),
     'public' => true,
     'has_archive' => false,
-    'supports' => array( 'title', 'thumbnail', 'excerpt', 'custom-fields' )
+    'supports' => array( 'title', 'thumbnail', 'excerpt' )
     )
   );
 }
@@ -341,6 +374,10 @@ require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/add_meta_b
 
 
 require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/dal_country_meta_box.php' );
+
+require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/organizer_metabox.php' );
+
+
 
 
 

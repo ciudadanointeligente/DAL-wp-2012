@@ -29,7 +29,7 @@ load_theme_textdomain('bootstrapwp');
 // Loading All CSS Stylesheets
 ################################################################################
   function bootstrapwp_css_loader() {
-    wp_enqueue_style('bootstrap', get_template_directory_uri().'/less/bootstrapwp.css', false ,'1.0', 'all' );
+    wp_enqueue_style('bootstrap', get_template_directory_uri().'/less/bootstrapwp2.css', false ,'1.0', 'all' );
     wp_enqueue_style('prettify', get_template_directory_uri().'/js/google-code-prettify/prettify.css', false ,'1.0', 'all' );
   }
 add_action('wp_enqueue_scripts', 'bootstrapwp_css_loader');

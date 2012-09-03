@@ -1,0 +1,88 @@
+//
+// CUSTOM
+
+
+
+
+// CUSTOM UTILITY CLASSES
+//complements utilities.less
+// ---------------
+.fullcentered{
+text-align: center;
+}
+
+.fullcentered [class*="span"] {
+float: none;
+margin-left: 30px;
+display: block;
+width: auto;
+}
+
+.nolist{
+list-style: none;
+margin: 0;
+}
+.nolist ul{
+	.nolist;
+}
+.marginListLeft{margin: 0 10px 10px 0; color: red;}
+
+
+
+//VARIABLES
+//complements variables.less
+//---------------------------
+
+
+
+// Links
+// -------------------------
+@linkColor:             #08c;
+@linkColorHover:        darken(@linkColor, 15%);
+
+// Buttons
+// -------------------------
+@btnBackground:                     @white;
+@btnBackgroundHighlight:            darken(@white, 10%);
+@btnBorder:                         #ccc;
+
+@btnPrimaryBackground:              @linkColor;
+@btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
+
+@btnInfoBackground:                 #5bc0de;
+@btnInfoBackgroundHighlight:        #2f96b4;
+
+@btnSuccessBackground:              #62c462;
+@btnSuccessBackgroundHighlight:     #51a351;
+
+@btnWarningBackground:              lighten(@orange, 15%);
+@btnWarningBackgroundHighlight:     @orange;
+
+@btnDangerBackground:               #ee5f5b;
+@btnDangerBackgroundHighlight:      #bd362f;
+
+@btnInverseBackground:              @gray;
+@btnInverseBackgroundHighlight:     @grayDarker;
+
+
+//STYLES
+//--------------------------
+
+.sponsorlist li{
+	.pull-left;
+	.marginListLeft;
+	.nolist;
+}
+.hr{
+	padding: 18px 0;
+	border: 0;
+	border-top: 1px solid #EEE;
+	border-bottom: 1px solid #EEE;
+	margin-bottom: 18px;
+}
+
+.sidebar-nav ul{
+	.nolist;
+}
+
+

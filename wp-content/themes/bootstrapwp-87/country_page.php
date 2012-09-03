@@ -32,7 +32,60 @@ get_header(); ?>
 				<?php endwhile; // end of the loop. ?>
 	        </div><!-- /.span8 -->
           
-        <?php get_sidebar('pais'); ?>
+        <?php get_sidebar(); 
+
+        	// calling the sponsors area
+        	get_template_part( 'local-sponsors' );
+
+        	// calling the latest post area
+        	get_template_part( 'country-posts-list' );
+
+
+
+	    ?>
+
+	    <!-- aside con sibling menu --> 
+		<aside>
+			aside menu
+			<?php
+
+			if($post->post_parent) { // page is a child
+
+			wp_list_pages('sort_column=menu_order&title_li= &child_of='.$post->post_parent);
+
+			}
+
+			elseif(wp_list_pages("child_of=".$post->ID."&echo=0")) { // page has children
+
+			wp_list_pages('sort_column=menu_order&title_li= &child_of='.$post->ID);
+			}
+			?>
+
+			-----
+			-----
+
+			<?php
+
+			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+
+			if ($term->parent == 0) { 
+
+			wp_list_categories('taxonomy=pais&depth=1&show_count=0
+
+			&title_li=&child_of=' . $term->term_id);
+
+			} else {
+
+			wp_list_categories('taxonomy=pais&show_count=0
+
+			&title_li=&child_of=' . $term->parent); 
+
+			}
+
+			?>
+
+
+		</aside>
 
 
 <?php get_footer(); ?>

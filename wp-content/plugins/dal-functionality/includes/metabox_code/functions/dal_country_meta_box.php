@@ -37,6 +37,15 @@ $country_meta_fields = array(
 		'type'	=> 'link'
 	),
 
+	array(
+		'label'	=> 'Más información en:',
+		'desc'	=> 'Selecciona la página "DAL en tu país" ',
+		'id'	=>  $prefix.'post_id',
+		'type'	=> 'country_page_list',
+		'post_type' => array('page')
+	),
+
+
 
 );
 
@@ -65,7 +74,7 @@ function show_country_meta_box() {
 						  } 
 						echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30"  placeholder="http://url.com"/>
 								<br /><span class="description">'.$field['desc'].'</span>';
-
+					break;
 					// repeatable
 					case 'repeatable':
 						echo '<ul id="'.$field['id'].'-repeatable" class="custom_repeatable">';
@@ -85,7 +94,6 @@ function show_country_meta_box() {
 						echo '<a class="repeatable-add button-primary" href="#">+ '.$field['call'].'</a></ul>
 							<span class="description">'.$field['desc'].'</span>';
 					break;
-
 
 					// repeatable link
 					case 'repeatablelink':
@@ -111,6 +119,24 @@ function show_country_meta_box() {
 						}
 						echo '</ul>
 							<span class="description">'.$field['desc'].'</span>';
+					break;
+					// country_page_list
+					case 'country_page_list':
+					$items = get_posts( array (
+						'post_type'	=> $field['post_type'],
+						'posts_per_page' => -1,
+						'sort_order' => 'DESC',
+    					'sort_column' => 'post_name',
+						'parent'=>0,
+						'exclude_tree'=>-1,
+
+					));
+						echo '<select name="'.$field['id'].'" id="'.$field['id'].'">
+								<option value="">Select One</option>'; // Select One
+							foreach($items as $item) {
+								echo '<option value="'.$item->ID.'"',$meta == $item->ID ? ' selected="selected"' : '','>'.$item->post_type.': '.$item->post_title.'</option>';
+							} // end foreach
+						echo '</select><br /><span class="description">'.$field['desc'].'</span>';
 					break;
 				} //end switch
 		echo '</td></tr>';

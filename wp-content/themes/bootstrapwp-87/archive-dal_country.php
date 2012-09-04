@@ -16,9 +16,9 @@
 get_header();
 if (have_posts() ) ;?>
 <div class="row">
-	solo countrys
+
 	<div class="container">
-		<?php if (function_exists('bootstrapwp_breadcrumbs')) bootstrapwp_breadcrumbs(); ?>
+		<?php// if (function_exists('bootstrapwp_breadcrumbs')) bootstrapwp_breadcrumbs(); ?>
 	</div><!--/.container -->
 </div><!--/.row -->
 <div class="container">

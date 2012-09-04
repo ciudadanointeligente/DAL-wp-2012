@@ -25,7 +25,10 @@ margin: 0;
 .nolist ul{
 	.nolist;
 }
-.marginListLeft{margin: 0 10px 10px 0; color: red;}
+.marginListLeft{
+	margin-right: 5px;
+	padding: 10px;
+}
 
 
 
@@ -39,6 +42,10 @@ margin: 0;
 // -------------------------
 @linkColor:             #08c;
 @linkColorHover:        darken(@linkColor, 15%);
+
+//Colors
+//---------------------------
+@lightgreen:		#95C033;
 
 // Buttons
 // -------------------------
@@ -64,6 +71,37 @@ margin: 0;
 @btnInverseBackground:              @gray;
 @btnInverseBackgroundHighlight:     @grayDarker;
 
+@btnActionBackground:				lighten(@lightgreen, 15%);
+@btnActionBackgroundHighlight:      @lightgreen;
+ 
+
+
+
+
+//Buttons
+//---------------------------
+
+.btn-action,
+.btn-action:hover {
+  color: @white;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+}
+
+.btn-action.active {
+  color: rgba(255,255,255,.75);
+}
+
+// Action appears as lightgreen
+.btn-action {
+  .buttonBackground(@btnActionBackground, @btnActionBackgroundHighlight);
+}
+
+
+//FONTS
+
+small {
+font-size: 85%;
+}
 
 //STYLES
 //--------------------------
@@ -84,5 +122,16 @@ margin: 0;
 .sidebar-nav ul{
 	.nolist;
 }
+.pagenav > li > ul > li{
+	.btn;
+	.btn-small;
 
-
+}
+.row.fullcentered .pagenav > li > ul > li.span {
+margin-left: 0px;
+margin-right: 0;
+}
+.light {
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
+}

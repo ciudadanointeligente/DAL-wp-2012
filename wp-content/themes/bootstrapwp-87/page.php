@@ -34,13 +34,20 @@ get_header(); ?>
       <header class="jumbotron subhead" id="overview">
         <h1 class="country"><?php the_title();?></h1> 
       </header>
-         
+     
+ <!-- Content
+      ================================================== -->      
         <div class="row content">
       <div class="span8">
         <?php the_content();?>
         <?php endwhile; // end of the loop. ?>
           </div><!-- /.span8 -->
-          <?php 
+
+
+  <!-- Sidebar
+      ================================================== -->         
+
+        <?php 
             $termstax = get_the_terms($post->ID, 'pais');
             $count = count($termstax);
             if ( is_array($termstax) && $count > 0 ){
@@ -50,6 +57,25 @@ get_header(); ?>
                  echo get_sidebar();
                 }    
         ?>
+     
+ <!-- Footer Sponsors & Organizers
+      ================================================== -->
+      <?php 
+            $termstax = get_the_terms($post->ID, 'pais');
+            $count = count($termstax);
+            if ( is_array($termstax) && $count > 0 ){
+    
+              //call the organizers
+              get_template_part( 'local-organizers' );
+
+              // call the sponsors area
+              get_template_part( 'local-sponsors' );
+            }
+            
+        ?>
+
+       
+          
 
 
 <?php get_footer(); ?>

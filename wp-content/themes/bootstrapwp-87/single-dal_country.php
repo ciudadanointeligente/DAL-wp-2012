@@ -40,9 +40,13 @@ get_header(); ?>
           
           <?php get_template_part('local-organizers')?>
 
-          <?php bootstrapwp_content_nav('nav-below');?>
         </div>
-        <div class="row span12 well">
+        <hr class="row span12"/>
+         <div class="span12">
+         <?php bootstrapwp_content_nav('nav-below');?>
+       </div>
+         <hr class="row span12"/>
+        <div class="span12 well">
            <?php comments_template(); ?>
         </div>
       </div>         

@@ -1,9 +1,12 @@
-<div class ="sponsorlist">
-	<ul>
-<?php
+<div class="row sponsorFooter well nolist"> 
+	
 
-$term = get_the_terms($post->ID, 'pais');
-//print_r($term);
+	<ul class="sponsorlist">
+		<li><h2>Organiza:</h2></li>
+	<?php
+
+	$term = get_the_terms($post->ID, 'pais');
+	//print_r($term);
 
         query_posts( array( 'post_type' => 'dal_organizers', 'pais'=>array_pop($term)->name, 'paged' => get_query_var('taxonomy'), 'posts_per_page' => 30, 'orderby' => 'title', 'order' => 'DESC' ) ); ?>
        
@@ -20,11 +23,11 @@ $term = get_the_terms($post->ID, 'pais');
                     </li>
                  
                       
-             <?php endwhile; else: ?>
-            <?php endif; ?>
-            </ul>  
-           
-   	 	<?php wp_reset_query();  ?>
+		<?php endwhile; else: ?>
+		<?php endif; ?>
+    </ul>  
+   
+ 	<?php wp_reset_query();  ?>
 
      </ul>   
 	

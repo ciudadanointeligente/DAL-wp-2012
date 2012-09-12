@@ -1,7 +1,7 @@
 //
 // CUSTOM
-
-
+//add hero-menuicons css
+@import "dal-icons.less";
 
 
 // CUSTOM UTILITY CLASSES
@@ -140,7 +140,7 @@ margin-right: 0;
 //navbar-fixed-top
 //------------------
 .navbar-fixed-top .brand {
-margin-left: 0;
+margin-left: 15px;
 float: left;
 }
 .navbar .brand {
@@ -153,39 +153,69 @@ width: 140px;
 display: none;
 
 }
-body {
-margin: 40px 0 0;
+
+body{margin-top: 40px;}
+
+@media (max-width: 979px) {
+	.navbar-fixed-top, .navbar-fixed-bottom {
+position: fixed;
+}
 }
 
-body.home{
-margin: 60px 0 0;
-}
 
-ul.breadcrumb {
-border: none;
-margin: 0;
-padding: 10px 0;
-background: none;
-float: right;
-font-size: 87%;
-}
 
 @media (max-width: 480px) {
 	.navbar .brand {
-margin-left: auto;
-margin-right: auto;
-float: none;
-}
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+	height: 30px;
+	}
 }
 
 //HOME 
 //hero space navbar
 //-------------
 
+.hero-menu{
+min-height: 100px;
+
+}
 .hero-menu li {
 float: left;
-width: 25%;
-line-height: 25px;
+width: 42%;
+line-height: 1.4em;
+/*background-color: @grayLighter;*/
+padding: 5px 10px;
+border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+margin: 3px;
+}
+
+.hero-menu li:hover{
+.box-shadow(inset 0px 1px 1px rgba(0,0,0,.05));
+background-color: @grayLighter;
+.border-radius(4px);
+}
+
+.hero-menu li a:hover{text-decoration: none;}
+.hero-menu li a{
+padding-left: 30px;
+display: block;
+position: relative;
+color:  gray;
+
+}
+
+.hero-menu li a::before {
+background-image: url('../img/dal/dal-hero-icons-sprite.png');
+content: '';
+position: absolute;
+left: 0px;
+display: block;
+top: 0px;
+width: 16px;
+height: 16px; 
+
 }
 
 

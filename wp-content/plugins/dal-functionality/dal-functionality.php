@@ -379,6 +379,13 @@ require_once( dirname( __FILE__ ) . '/includes/metabox_code/functions/organizer_
 
 
 
+//===== Add HOME hero space menu
+function register_dal_menus() {
+  register_nav_menus(
+    array( 'hero-menu' => __( 'Hero Menu' ) )
+  );
+}
+add_action( 'init', 'register_dal_menus' );
 
 
 

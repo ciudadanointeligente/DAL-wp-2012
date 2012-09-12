@@ -29,7 +29,7 @@ load_theme_textdomain('bootstrapwp');
 // Loading All CSS Stylesheets
 ################################################################################
   function bootstrapwp_css_loader() {
-    wp_enqueue_style('bootstrap', get_template_directory_uri().'/less/bootstrapwp2.css', false ,'1.0', 'all' );
+    wp_enqueue_style('bootstrap', get_template_directory_uri().'/less/bootstrapwp3.css', false ,'1.0', 'all' );
     wp_enqueue_style('prettify', get_template_directory_uri().'/js/google-code-prettify/prettify.css', false ,'1.0', 'all' );
   }
 add_action('wp_enqueue_scripts', 'bootstrapwp_css_loader');
@@ -134,6 +134,17 @@ function bootstrapwp_widgets_init() {
     'name' => 'Footer Content',
     'id'   => 'footer-content',
     'description'   => 'Footer text or acknowledgements',
+    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h4>',
+    'after_title'   => '</h4>'
+  ));
+
+  //CUSTOM DAL DINAMIC SIDEBARS
+    register_sidebar(array(
+    'name' => 'Hero Left',
+    'id'   => 'hero-left',
+    'description'   => 'hero 1',
     'before_widget' => '<div id="%1$s" class="widget %2$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<h4>',

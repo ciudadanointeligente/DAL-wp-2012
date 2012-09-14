@@ -9260,29 +9260,13 @@ small {
 body {
   margin-top: 40px;
 }
-@media (max-width: 979px) {
-  .navbar-fixed-top,
-  .navbar-fixed-bottom {
-    position: fixed;
-  }
-}
-@media (max-width: 480px) {
-  .navbar .brand {
-    margin-left: auto;
-    margin-right: auto;
-    float: none;
-    height: 30px;
-  }
-}
 .hero-menu {
   min-height: 100px;
 }
 .hero-menu li {
   float: left;
-  width: 42%;
+  width: 43%;
   line-height: 1.4em;
-  /*background-color: @grayLighter;*/
-
   padding: 5px 10px;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
   margin: 3px;
@@ -9320,4 +9304,240 @@ body {
   top: 0px;
   width: 16px;
   height: 16px;
+}
+/* PSEUDOELEMENTS befores & afters */
+.box-contentwrap::before,
+.box-top::before {
+  content: '';
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  display: block;
+}
+.box-contentwrap {
+  width: 86%;
+  background: url(../img/dal/cubo/right-side.png) -1px 0px repeat-y #ffffff;
+  margin: 0;
+  padding: 9px 3% 9px 9%;
+  border-left: 0;
+  position: relative;
+}
+.box-contentwrap::before {
+  background: url(../img/dal/cubo/bottom-after.png) -1px 0px no-repeat transparent;
+  bottom: 0;
+  left: 0px;
+}
+.box-top {
+  height: 16px;
+  width: 86%;
+  margin: 0;
+  padding: 0 6%;
+  background: url(../img/dal/cubo/top.png) no-repeat right 0;
+  position: relative;
+  margin-right: 0;
+}
+.box-top::before {
+  background: url(../img/dal/cubo/top-left.png) 1px 1px no-repeat transparent;
+  top: 0px;
+  left: 0px;
+}
+/*center box*/
+.center-box .box-contentwrap {
+  background: white;
+  padding: 9px 4%;
+  width: 90%;
+}
+.center-box .box-top::before {
+  background: url(../img/dal/cubo/top.png) -1px 0px no-repeat #ffffff;
+  left: 0;
+}
+.center-box .box-contentwrap::before {
+  background: none;
+}
+/*right-box*/
+.left-box .box-contentwrap {
+  background: url(../img/dal/cubo/left-side.png) 100% 0px repeat-y #ffffff;
+  padding: 9px 8% 9px 4%;
+}
+.left-box .box-contentwrap::before {
+  background: url(../img/dal/cubo/bottom-after-right.png) 1px 1px no-repeat transparent;
+  right: 0px;
+  left: auto;
+}
+.left-box .box-top {
+  background-position: left 0;
+}
+.left-box .box-top::before {
+  background: url(../img/dal/cubo/top-right.png) 0px 0px no-repeat transparent;
+  left: auto;
+  right: 0;
+}
+/*general*/
+.HomeCentrado {
+  position: relative;
+  display: block;
+  margin-right: 60px;
+  margin-left: 60px;
+  float: none;
+}
+.blackground {
+  background-color: #282828;
+  position: relative;
+  display: block;
+  margin-right: 60px;
+  margin-left: 60px;
+  float: none;
+  min-height: 200px;
+  padding: 20px 0 120px ;
+  clear: both;
+  /*width: @gridRowWidth - ((@gridColumnWidth * 2 ) + (@gridGutterWidth * 2 );*/
+
+}
+.blackground::before,
+.blackground::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 320px;
+  height: 253px;
+  bottom: -86px;
+  z-index: 20;
+}
+.blackground::before {
+  background: url(../img/dal/edificios1.png) no-repeat 0 10px transparent;
+  left: 10px;
+  width: 380px;
+}
+.blackground::after {
+  background: url(../img/dal/edificios2.png) no-repeat 0 10px transparent;
+  right: -3px;
+  width: 320px;
+}
+.blackbottom {
+  height: 60px;
+  background-color: #EEE;
+  min-width: 60px;
+  padding: 5px 20px;
+  position: relative;
+  display: block;
+  margin-right: 60px;
+  margin-left: 60px;
+  float: none;
+}
+.blackbottom::before {
+  border-width: 70px 60px 0px 0px;
+  left: -60px;
+}
+.blackbottom::after {
+  border-width: 70px 0px 0px 60px;
+  right: -60px;
+}
+.blackbottom::before,
+.blackbottom::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent #EEE;
+  border-style: solid;
+  bottom: 0;
+}
+.wrapper {
+  background-color: whiteSmoke;
+  padding: 30px 10px;
+}
+@media (max-width: 480px) {
+  .navbar .brand {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    height: 30px;
+  }
+  .blackground,
+  .blackbottom {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  .blackbottom {
+    height: 40px -10px;
+  }
+  .blackbottom::before {
+    border-width: 40px 40px 0px 0px;
+    left: -40px;
+  }
+  .blackbottom::after {
+    border-width: 40px 0px 0px 40px;
+    right: -40px;
+  }
+  .wrapper {
+    padding: 30px 20px;
+    width: 100%;
+    margin: 0 -20px;
+  }
+  .hero-menu li {
+    float: none;
+    width: auto;
+    margin: 3px auto;
+  }
+  .blackground::before {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .blackground,
+  .blackbottom {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  .blackground {
+    padding: 20px 20px 120px ;
+  }
+  .blackbottom {
+    height: 30px;
+  }
+  .blackbottom::before {
+    border-width: 40px 40px 0px 0px;
+    left: -40px;
+  }
+  .blackbottom::after {
+    border-width: 40px 0px 0px 40px;
+    right: -40px;
+  }
+  .wrapper {
+    padding: 30px 20px;
+    width: 100%;
+    margin: 0 -20px;
+  }
+  .hero-menu li {
+    margin: 3px auto;
+  }
+  .blackground::before {
+    background-image: url(../img/dal/edificios1-1.png);
+    width: 352px;
+    left: -49px;
+    z-index: 30;
+  }
+  .blackground::after {
+    right: -21px;
+    width: 307px;
+    background-image: url(../img/dal/edificios2-2.png);
+  }
+}
+@media (max-width: 979px) and (min-width: 768px) {
+  .blackground::before {
+    left: 0;
+    width: 276px;
+  }
+  .blackground::after {
+    background: url(../img/dal/edificios2.png) no-repeat 0 10px transparent;
+    right: -3px;
+    width: 320px;
+  }
+}
+@media (max-width: 979px) {
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+    position: fixed;
+  }
 }

@@ -156,22 +156,7 @@ display: none;
 
 body{margin-top: 40px;}
 
-@media (max-width: 979px) {
-	.navbar-fixed-top, .navbar-fixed-bottom {
-position: fixed;
-}
-}
 
-
-
-@media (max-width: 480px) {
-	.navbar .brand {
-	margin-left: auto;
-	margin-right: auto;
-	float: none;
-	height: 30px;
-	}
-}
 
 //HOME 
 //hero space navbar
@@ -183,9 +168,8 @@ min-height: 100px;
 }
 .hero-menu li {
 float: left;
-width: 42%;
+width: 43%;
 line-height: 1.4em;
-/*background-color: @grayLighter;*/
 padding: 5px 10px;
 border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
 margin: 3px;
@@ -206,7 +190,7 @@ color:  gray;
 
 }
 
-.hero-menu li a::before {
+.hero-menu li a::before{
 background-image: url('../img/dal/dal-hero-icons-sprite.png');
 content: '';
 position: absolute;
@@ -215,7 +199,304 @@ display: block;
 top: 0px;
 width: 16px;
 height: 16px; 
+}
+
+//HOME
+/* PSEUDOELEMENTS befores & afters */
+
+		.box-contentwrap::before, .box-top::before {
+			content: '';
+			position: absolute;
+			height: 16px;
+			width: 16px;
+			display: block;
+
+		}
+		.box-contentwrap {
+			width: 86%;
+			background: url(../img/dal/cubo/right-side.png) -1px 0px repeat-y white;
+			margin: 0;
+			padding: 9px 3% 9px 9%;
+			border-left: 0;
+			position: relative;
+		}
+
+		.box-contentwrap::before {
+			background: url(../img/dal/cubo/bottom-after.png) -1px 0px no-repeat transparent;
+			bottom: 0;
+			left: 0px;
+
+
+		}	
+
+		.box-top{
+			height: 16px;
+			width: 86%;
+			margin: 0;
+			padding: 0 6%;
+			background: url(../img/dal/cubo/top.png) no-repeat right 0;
+			position: relative;
+			margin-right: 0;
+		}
+
+		.box-top::before{
+			background: url(../img/dal/cubo/top-left.png) 1px 1px no-repeat transparent;			
+			top: 0px;
+			left: 0px;
+		}
+	
+		/*center box*/
+		
+		.center-box .box-contentwrap{
+			background: white;
+			padding: 9px 4%;
+			width: 90%;
+
+		}
+
+	
+			.center-box .box-top::before {
+			background: url(../img/dal/cubo/top.png) -1px 0px no-repeat white;
+			left: 0;
+		}
+
+
+		.center-box .box-contentwrap::before{background: none;}
+
+		/*right-box*/
+
+		.left-box .box-contentwrap{
+			background: url(../img/dal/cubo/left-side.png) 100% 0px repeat-y white;
+			padding: 9px 8% 9px 4%;
+
+		}
+
+		.left-box .box-contentwrap::before {
+			background: url(../img/dal/cubo/bottom-after-right.png) 1px 1px no-repeat transparent;
+			right: 0px;
+			left: auto;
+		}
+
+		.left-box .box-top{background-position: left 0;}
+		.left-box .box-top::before{
+			background: url(../img/dal/cubo/top-right.png) 0px 0px no-repeat transparent;
+			left: auto;
+			right: 0;
+
+		}
+
+
+
+		/*general*/
+		@shelfcornersWidthA: (@gridColumnWidth * 1) ;
+		@shelfcornersWidthB: (@gridColumnWidth + (@gridGutterWidth * 0.5 ));
+
+		.HomeCentrado{
+			position: relative;
+			display: block;
+			margin-right: @gridColumnWidth;
+			margin-left: @gridColumnWidth;
+			float: none;
+		}
+
+		.blackground{
+			background-color: #282828;
+			.HomeCentrado;
+			min-height: 200px;
+			padding: 20px 0 120px ;
+			clear: both;
+
+			/*width: @gridRowWidth - ((@gridColumnWidth * 2 ) + (@gridGutterWidth * 2 );*/
+			
+		}
+
+		.blackground::before, .blackground::after{
+			content: '';
+			position: absolute;
+			display: block;
+			width: 320px;
+			height: 253px;
+			bottom: -86px;
+			z-index: 20;
+		}
+		.blackground::before{
+			background: url(../img/dal/edificios1.png) no-repeat 0 10px transparent;
+			left: 10px;
+			width: 380px;
+
+		}
+		.blackground::after{
+			background: url(../img/dal/edificios2.png) no-repeat 0 10px transparent;
+			right: -3px;
+			width: 320px;
+		}
+
+		.blackbottom {
+			height: @gridColumnWidth;
+			background-color: #EEE;
+			min-width: @gridColumnWidth;
+			padding: 5px 20px;
+			.HomeCentrado;
+		}
+		.blackbottom::before {
+			border-width: @shelfcornersWidthB @shelfcornersWidthA 0px 0px;
+			left: @shelfcornersWidthA * -1;
+		}
+
+		.blackbottom::after {
+			border-width: @shelfcornersWidthB 0px 0px @shelfcornersWidthA;
+			right: @shelfcornersWidthA * -1;
+
+		}
+		.blackbottom::before, .blackbottom::after  {
+			content: '';
+			position: absolute;
+			display: block;
+			width: 0;
+			height: 0;
+			border-color: transparent #EEE;
+			border-style: solid;
+			bottom: 0;
+		}
+		.wrapper {
+			background-color: whiteSmoke;
+			padding: 30px 10px;
+		}
+		.wrapper .row {
+			
+		}
+		.wrapper [class*="span"]{ }
+
+
+// MEDIA QUERIES //
+
+// UP TO LANDSCAPE PHONE
+// ---------------------
+
+@media (max-width: 480px) {
+
+	.navbar .brand {
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+	height: 30px;
+	}
+	.blackground, .blackbottom {
+		margin-right: @gridGutterWidth;
+		margin-left: @gridGutterWidth;
+	}
+	.blackbottom{
+		height: @shelfMini -10px;
+	}
+
+	@shelfMini: (@gridGutterWidth * 2 );
+
+	.blackbottom::before {
+		border-width: @shelfMini @shelfMini 0px 0px;
+		left: @shelfMini * -1;
+	}
+
+	.blackbottom::after {
+		border-width: @shelfMini 0px 0px @shelfMini;
+		right: @shelfMini * -1;
+
+	}
+
+	.wrapper{
+		padding: 30px 20px;
+		width: 100%;
+		margin: 0 -20px;
+	}
+
+	.hero-menu li {
+		float: none;
+		width: auto;
+		margin: 3px auto;
+
+	}
+	.blackground::before{
+			display: none;
+		}
+
+	
 
 }
+
+
+// LANDSCAPE PHONE TO SMALL DESKTOP & PORTRAIT TABLET
+// --------------------------------------------------
+
+@media (max-width: 767px) {
+	.blackground, .blackbottom {
+		margin-right: @gridGutterWidth;
+		margin-left: @gridGutterWidth;
+	}
+	.blackground{padding: 20px 20px 120px ;}
+	@shelfMini: (@gridGutterWidth * 2 );
+	.blackbottom{
+		height: @shelfMini - 10px;
+	}
+
+	
+
+	.blackbottom::before {
+		border-width: @shelfMini @shelfMini 0px 0px;
+		left: @shelfMini * -1;
+		
+	}
+
+	.blackbottom::after {
+		border-width: @shelfMini 0px 0px @shelfMini;
+		right: @shelfMini * -1;
+	
+
+	}
+
+	.wrapper{
+		padding: 30px 20px;
+		width: 100%;
+		margin: 0 -20px;
+	}
+	.hero-menu li {
+		margin: 3px auto;
+
+	}
+	.blackground::before {
+		background-image: url(../img/dal/edificios1-1.png);
+		width: 352px;
+		left: -49px;
+		z-index: 30;
+	}
+	.blackground::after{
+			right: -21px;
+		width: 307px;
+		background-image: url(../img/dal/edificios2-2.png);
+	}	
+}
+	
+
+@media (max-width: 979px) and (min-width: 768px){
+
+	.blackground::before{
+			left: 0;
+			width: 276px;
+
+		}
+		.blackground::after{
+			background: url(../img/dal/edificios2.png) no-repeat 0 10px transparent;
+			right: -3px;
+			width: 320px;
+		}
+
+
+}
+
+
+@media (max-width: 979px) {
+	.navbar-fixed-top, .navbar-fixed-bottom {
+position: fixed;
+}
+}
+
 
 

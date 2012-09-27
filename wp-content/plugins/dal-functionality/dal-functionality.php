@@ -137,7 +137,7 @@ function save_taxonomy_data($post_id) {
 
 
 //
-//======== 2- Let's register aur cuntry page custom sidebar
+//======== 2- Let's register our cuntry page custom sidebar
 //
 if ( function_exists ('register_sidebar')) { 
    register_sidebar(array(
@@ -386,9 +386,5 @@ function register_dal_menus() {
   );
 }
 add_action( 'init', 'register_dal_menus' );
-
-
-
-
 
 

@@ -104,8 +104,10 @@ function bootstrapwp_widgets_init() {
     'name' => 'Home Left',
     'id'   => 'home-left',
     'description'   => 'Left textbox on homepage',
-    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-    'after_widget'  => '</div>',
+    'before_widget' => '<div class="widget left-box span4">
+          <div class="box-top"></div>
+            <div class="box-contentwrap">',
+    'after_widget'  => '</div></div>',
     'before_title'  => '<h2>',
     'after_title'   => '</h2>'
   ));
@@ -114,8 +116,10 @@ function bootstrapwp_widgets_init() {
     'name' => 'Home Middle',
     'id'   => 'home-middle',
     'description'   => 'Middle textbox on homepage',
-    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-    'after_widget'  => '</div>',
+    'before_widget' => '<div class="widget center-box span4">
+          <div class="box-top"></div>
+            <div class="box-contentwrap"> ',
+    'after_widget'  => '</div></div>',
     'before_title'  => '<h2>',
     'after_title'   => '</h2>'
   ));
@@ -124,8 +128,10 @@ function bootstrapwp_widgets_init() {
     'name' => 'Home Right',
     'id'   => 'home-right',
     'description'   => 'Right textbox on homepage',
-    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-    'after_widget'  => '</div>',
+    'before_widget' => '<div class="widget right-box span4">
+          <div class="box-top"></div>
+            <div class="box-contentwrap"> ',
+    'after_widget'  => '</div></div>',
     'before_title'  => '<h2>',
     'after_title'   => '</h2>'
   ));

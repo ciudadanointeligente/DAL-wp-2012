@@ -41,30 +41,20 @@ get_header(); ?>
 
     <div class="row wrapper">
        <div class="row">
-        <div class="left-box span4">
-          <div class="box-top"></div>
-            <div class="box-contentwrap">
+        
              <?php
               if ( function_exists('dynamic_sidebar')) dynamic_sidebar("home-left");
               ?>
-            </div>
-        </div>  
-        <div class="center-box span4">
-          <div class="box-top"></div>
-            <div class="box-contentwrap">
+     
               <?php
-              if ( function_exists('dynamic_sidebar')) dynamic_sidebar("home-left");
+              if ( function_exists('dynamic_sidebar')) dynamic_sidebar("home-middle");
               ?>
-            </div>
-        </div>    
-        <div class="right-box span4">
-          <div class="box-top"></div>
-            <div class="box-contentwrap">
+      
+      
              <?php
               if ( function_exists('dynamic_sidebar')) dynamic_sidebar("home-right");
               ?>
-            </div>
-        </div>   
+             
       </div>
     </div>  
        <hr class="soften">
